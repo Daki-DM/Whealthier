@@ -1,0 +1,26 @@
+{
+  "name": "timathon-health-project",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "install-deps": "npm i --no-bin-links",
+    "build": "node ./node_modules/rollup/dist/bin/rollup -cw",
+    "serve": "serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daki-dm/pharmacy-health-project.git"
+  },
+  "author": [
+    "cw3dv",
+    "Daki-DM"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daki-dm/pharmacy-health-project/issues"
+  },
+  "homepage": "https://github.com/daki-dm/pharmacy-health-project#readme",
+  "devDependencies": {
+    "rollup": "^2.56.2"
+  }
+}

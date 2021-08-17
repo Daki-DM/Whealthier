@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 300vh;
+  background-color: #F3F3F3;
+  color: #111;
+}
+
+.nav-container {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.1s ease;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.nav-container.chip-off {
+  position: fixed;
+  width: 95%;
+  z-index: 1;
+  border: 1px black solid;
+  margin-top: 0.8rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20.0px);
+  -webkit-backdrop-filter: blur(20.0px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}

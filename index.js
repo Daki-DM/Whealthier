@@ -1,6 +1,6 @@
 let nav = document.getElementById('nav');
 
-window.body.addEventListener('scroll', (ev) => {
+document.onscroll = (ev) => {
     if (
         document.body.scrollTop > 2 ||
         document.documentElement.scrollTop > 2
@@ -9,4 +9,4 @@ window.body.addEventListener('scroll', (ev) => {
     } else {
         nav.classList.remove('chip-off');
     }
-});
+};

@@ -16,20 +16,20 @@ body {
   justify-content: space-between;
   align-items: center;
   transition: all 0.1s ease;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0%);
   padding: 10px;
   border-radius: 10px;
   backdrop-filter: blur(20.0px);
   -webkit-backdrop-filter: blur(20.0px);
   border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .nav-container.chip-off {
   position: fixed;
   width: 95%;
-  z-index: 1;
   margin-top: 0.8rem;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }

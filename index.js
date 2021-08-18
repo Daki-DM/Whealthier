@@ -1,4 +1,6 @@
 let nav = document.getElementById('nav');
+let menu = document.getElementById('menu');
+let menuToggler = document.getElementById('menu-toggler');
 
 document.onscroll = (ev) => {
     if (
@@ -10,3 +12,7 @@ document.onscroll = (ev) => {
         nav.classList.remove('chip-off');
     }
 };
+
+menuToggler.onclick = () => {
+  menu.classList.toggle('active');
+}

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -7,21 +9,19 @@
 body {
   background-color: #F3F3F3;
   color: #111;
+  scroll-behavior: smooth;
 }
 
 .nav-container {
-  max-width: 100%;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   transition: all 0.1s ease;
   padding: 10px;
   border-radius: 10px;
-  backdrop-filter: blur(20.0px);
-  -webkit-backdrop-filter: blur(20.0px);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  z-index: 1;
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -32,4 +32,78 @@ body {
   width: 95%;
   margin-top: 0.8rem;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  background-color: rgba(255, 255, 255, .9);
+}
+
+.nav-container .nav-heading {
+  font-size: 1.2rem;
+  font-family: 'Sigmar One', cursive;
+}
+
+.nav-container .nav-menu-toggler {
+  display: none;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  background-color: transparent;
+}
+
+.nav-container .nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-container .nav-list li {
+  margin-left: 40px;
+}
+
+.nav-container .nav-list li a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: black;
+  letter-spacing: 0.3ch;
+  position: relative;
+  font-family: Arial;
+}
+
+.nav-container .nav-list li a::after {
+  position: absolute;
+  content: '';
+  height: 2px;
+  background-color: green;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  transition: 0.4s ease;
+}
+
+.nav-container .nav-list li a:hover::after {
+  width: 100%;
+}
+
+.content {
+  padding-top: 4rem;
+}
+
+@media (max-width: 768px) {
+  .break {
+    flex-basis: 100%;
+    height: 0;
+  }
+  .nav-container .nav-menu-toggler {
+    display: block;
+  }
+  .nav-container .nav-list {
+    flex-direction: column;
+    order: 3;
+    width: 100%;
+    display: none;
+  }
+  .nav-container .nav-list.active {
+    display: flex;
+  }
+  .nav-container .nav-list li {
+    margin: 5px 5px;
+  }
 }

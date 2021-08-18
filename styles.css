@@ -25,6 +25,7 @@ body {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0%);
+  background-color: rgba(255, 255, 255, .9);
 }
 
 .nav-container.chip-off {
@@ -32,7 +33,6 @@ body {
   width: 95%;
   margin-top: 0.8rem;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  background-color: rgba(255, 255, 255, .9);
 }
 
 .nav-container .nav-heading {

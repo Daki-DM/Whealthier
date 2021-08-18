@@ -1,6 +1,6 @@
 let nav = document.getElementById('nav');
 
-window.addEventListener('scroll', (ev) => {
+document.addEventListener('scroll', (ev) => {
   if (
     document.body.scrollTop > 2 ||
     document.documentElement.scrollTop > 2

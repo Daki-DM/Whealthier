@@ -1,3 +1,5 @@
+import { main } from './src/index.js'
+
 let nav = document.getElementById('nav');
 let menu = document.getElementById('menu');
 let menuToggler = document.getElementById('menu-toggler');
@@ -16,3 +18,5 @@ document.onscroll = (ev) => {
 menuToggler.onclick = () => {
   menu.classList.toggle('active');
 }
+
+main();

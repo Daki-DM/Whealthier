@@ -5,9 +5,8 @@
  **/
 
 const request = (method, url) => {
-  let xmlRequest = null;
+  let xmlRequest = new XMLHttpRequest();
   if('withCredentials' in xmlRequest) {
-    xmlRequest = new XMLHttpRequest();
     xmlRequest.open(method, url, true);
   } else if (typeof XDomainRequest !== 'undefined') {
     xmlRequest = new XDomainRequest();

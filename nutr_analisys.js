@@ -1,0 +1,1 @@
+var input = document.getElementById('food').value;

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timathon-Health-Project</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <script src="nutr_analisys.js" charset="utf-8" defer></script>
+</head>
+<style>
+    #food {
+        position: relative;
+        left: 29%;
+        width: 40%;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    #subm_button {
+        width: 10%;
+        height: 50px;
+        position: relative;
+        left: 43%;
+        font-size: 20px;
+        border-radius: 14px;
+        border: none;
+        background: linear-gradient(45deg, orange, yellow);
+    }
+</style>
+<script>
+    const {
+        NutritionAnalysisClient
+    } = require('edamam-api');
+
+    (async() => {
+
+        const client = new NutritionAnalysisClient({
+            appId: '810208fd',
+            appKey: 'd4e09ca11057c2b54c3cec4b689831ed'
+        });
+
+        const results = await client.search({
+            query: 'Chicken'
+        });
+        console.log(results)
+
+    })();
+</script>
+
+<body>
+    <div class="nav-container" id="nav">
+        <div class="nav-heading">
+            Name
+        </div>
+        <button class="nav-menu-toggler" id="menu-toggler">
+            &#8801;
+        </button>
+        <div class="break"></div>
+        <ul class="nav-list" id="menu">
+            <li><a href="#home">home</a></li>
+            <li><a href="#features">features</a></li>
+            <li><a href="#about">about</a></li>
+        </ul>
+    </div>
+    <div class="content">
+
+        <input type="text" id="food" placeholder="Put in your meal"><br>
+        <button id="subm_button">SUBMIT</button>
+    </div>
+    <script src="index.js" type="module" charset="utf-8"></script>
+
+</body>
+
+</html>

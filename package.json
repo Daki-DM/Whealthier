@@ -21,9 +21,7 @@
   },
   "homepage": "https://github.com/daki-dm/pharmacy-health-project#readme",
   "devDependencies": {
+    "express": "^4.17.1",
     "rollup": "^2.56.2"
-  },
-  "dependencies": {
-    "edamam-api": "^1.1.3"
   }
 }

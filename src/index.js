@@ -1,5 +1,8 @@
-import { request } from './utils/request.js';
-import { SearchBar } from './views/searchBar/searchBar.js';
+import {
+  Route,
+  Router
+} from './miscellaneous/router.js'
+import { NavBar } from './views/nav-bar/nav-bar.js';
 
 const apiData = {
   appId: '810208fd',
@@ -10,17 +13,11 @@ let nav = document.getElementById('nav');
 let menu = document.getElementById('menu');
 let menuToggler = document.getElementById('menu-toggler');
 
-document.onscroll = (ev) => {
-  if (
-    document.body.scrollTop > 2 ||
-    document.documentElement.scrollTop > 2
-  ) {
-    nav.classList.add('chip-off');
-  } else {
-    nav.classList.remove('chip-off');
-  }
-};
+let routes = [
+  new Route('/', ''),
+  new Route('/search', './miscellaneous/searchBar/searchBar.js')
+]
 
-menuToggler.onclick = () => {
-  menu.classList.toggle('active');
-}
+document.addEventListener('DOMContentLoaded', () => {
+  new Router(routes);
+});

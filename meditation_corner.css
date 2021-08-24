@@ -1,0 +1,100 @@
+body {
+    background: linear-gradient(to left, rgb(193, 248, 255), white, rgb(193, 248, 255))
+}
+
+a {
+    display: inline-block;
+    width: 50px;
+    text-decoration: none;
+}
+
+nav,
+.scroll-container {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+nav {
+    width: 339px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.scroll-container {
+    width: 350px;
+    height: 100px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.scroll-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 5em;
+}
+
+audio {
+    background: linear-gradient(45deg, rgb(150, 231, 255), rgb(163, 163, 255));
+}
+
+video {
+    height: 40%;
+    width: 50%;
+}
+
+.mood_b_fresh {
+    background-image: url("logos/logo_f.png");
+    background-color: rgb(153, 255, 128);
+    box-shadow: 5px 5px 5px rgb(179, 255, 179);
+}
+
+.mood_b_fresh:hover,
+.mood_b_fresh:focus {
+    transition-duration: 0.28s;
+    box-shadow: 0 0.9em 0.9em -0.38em rgb(131, 245, 169);
+    transform: translateY(-0.25em);
+}
+
+.mood_b_rainy {
+    background-image: url("logos/logo_r.png");
+    background-color: rgb(128, 215, 255);
+}
+
+.mood_b_rainy:hover,
+.mood_b_rainy:focus {
+    transition-duration: 0.28s;
+    box-shadow: 0 0.9em 0.9em -0.38em rgb(73, 204, 255);
+    transform: translateY(-0.25em);
+}
+
+.mood_b_mountains {
+    background-image: url("logos/logo_m.png");
+    background-color: rgb(255, 255, 255);
+}
+
+.mood_b_mountains:hover,
+.mood_b_mountains:focus {
+    transition-duration: 0.28s;
+    box-shadow: 0 0.9em 0.9em -0.38em rgb(255, 219, 140);
+    transform: translateY(-0.25em);
+}
+
+.mood_b {
+    border-radius: 50%;
+    height: 80px;
+    width: 80px;
+    background-size: cover;
+    border: none;
+}
+
+label {
+    font-size: 15px;
+}
+
+.buttons {
+    position: relative;
+    left: 42%;
+}

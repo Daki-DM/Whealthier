@@ -4,6 +4,8 @@
 <head>
     <link rel="stylesheet" href="meditation_corner.css" type="text/css" />
 </head>
+<script src="meditation_corner.js"></script>
+
 
 
 <body onload="slide()">
@@ -29,6 +31,8 @@
         </div>
     </div>
 
+
+
     <!--Button presets-->
     <div class="buttons">
         <button class="mood_b_fresh mood_b" onclick="document.getElementById('myAudio1').play();">
@@ -46,10 +50,28 @@
     </div>
 
 
-    <video controls loop>
-        <source src="ocean.mov" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <!--Slideshow-->
+    <div class="container">
+        <div class="mySlides">
+            <video controls loop>
+                <source src="ocean.mov" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="mySlides">
+            <img id="123" src="ezgif-4-67b4af989318.gif" alt="this slowpoke moves" width="50%" height="50%" />
+            <button>
+                click me</button>
+        </div>
+
+
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+
+
+
+
+
 
 </body>
 

@@ -8,7 +8,7 @@ class HomeView extends BaseView {
   
   async getHtml() {
     return `
-    <div>Hello Dumbass Bitch</div>
+    <div>Health is wealth</div>
     `;
   }
 };

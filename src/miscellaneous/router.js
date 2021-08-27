@@ -4,7 +4,7 @@ class Router {
   /*
    * @param routes Array [ Route ]
    **/
-  constructor(routes) {
+  static async router(routes) {
     let potentialMatches = routes.map(route => {
       return {
         route: route,
@@ -20,6 +20,13 @@ class Router {
         isMatch: true
       };
     }
+    
+    let view = new match.route.view();
+    document.getElementById('app').innerHTML = await view.getHtml();
+  }
+  static navigateTo(url, routes) {
+    history.pushState(null, null, url);
+    Router.router(routes);
   }
 }
 

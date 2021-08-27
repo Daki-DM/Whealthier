@@ -11,8 +11,9 @@ body {
   background-color: #F3F3F3;
   color: #111;
   scroll-behavior: smooth;
+  height: 100vh;
 }
 
-.content {
-  padding-top: 4rem;
+#app {
+  padding-top: 0rem;
 }

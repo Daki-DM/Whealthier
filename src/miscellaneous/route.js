@@ -1,12 +1,12 @@
 class Route {
   name = '';
-  htmlPath = '';
+  view = null;
   constructor(
     _name,
-    _htmlPath
+    _view
   ) {
     this.name = _name;
-    this.htmlPath = _htmlPath;
+    this.view = _view;
   }
   isMatch(pathName) {
     return this.name === pathName;

@@ -1,10 +1,17 @@
 import { Route } from './route.js';
+import { HomeView } from '../views/home/home.js';
+import { MeditationCornerView } from '../views/meditation-corner/meditation-corner.js';
+
+let routes = [
+  new Route('/', HomeView),
+  new Route('/meditation-corner', MeditationCornerView)
+]
 
 class Router {
   /*
    * @param routes Array [ Route ]
    **/
-  static async router(routes) {
+  static async router() {
     let potentialMatches = routes.map(route => {
       return {
         route: route,
@@ -24,13 +31,12 @@ class Router {
     let view = new match.route.view();
     document.getElementById('app').innerHTML = await view.getHtml();
   }
-  static navigateTo(url, routes) {
+  static navigateTo(url) {
     history.pushState(null, null, url);
-    Router.router(routes);
+    Router.router();
   }
 }
 
 export {
-  Route,
   Router
 };

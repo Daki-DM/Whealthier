@@ -2,8 +2,8 @@ import { NavListElement } from './nav-list-element.js';
 
 let navListArray = [
   { href: '/', name: 'home' },
-  { href: '/features', name: 'features' },
-  { href: '#about', name: 'about' }
+  { href: '/about', name: 'about' },
+  { href: '/contact-us', name: 'contact us' }
 ];
 
 let navBarStyle = document.createElement('style');

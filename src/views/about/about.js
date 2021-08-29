@@ -102,7 +102,7 @@ class AboutView extends BaseView {
           </span> is made in such a way that it can be used across almost all
           devices. <span class="product">Be healthy, Be happy!</span>
         </p>
-        <img src="/images/about-us.png"/>
+        <img src="https://ik.imagekit.io/pzrj7oa3hsd/timathon-health/about-us_cj2VFvDrc.png?updatedAt=1630244931913"/>
       </div>
       <section-break></section-break>
       <h2>Contributors</h2>

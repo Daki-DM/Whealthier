@@ -41,6 +41,7 @@ class NavListElement extends HTMLElement {
     let li = document.createElement('li');
     
     this.a = document.createElement('a');
+    this.a.setAttribute('spa-page-link', 'true');
     
     li.appendChild(this.a);
     

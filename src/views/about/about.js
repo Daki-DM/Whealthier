@@ -14,7 +14,7 @@ let aboutViewStyle = `
 
 .about .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 1rem;
@@ -26,7 +26,7 @@ let aboutViewStyle = `
 }
 
 .about .container img {
-  max-width: 75%;
+  max-width: 50%;
 }
 
 .product {

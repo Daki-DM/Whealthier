@@ -78,6 +78,9 @@ let aboutViewStyle = `
     margin-left: 10px;
     margin-right: 10px;
   }
+  .about .container img {
+    max-width: 100%;
+  }
   .about .c-container {
     flex-direction: column;
     justify-content: center;

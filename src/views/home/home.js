@@ -1,10 +1,6 @@
 import BaseView from '../baseView.js';
-import { SectionBreaker } from '../../components/section-breaker/section-breaker.js';
 
 let homeViewStyle = `
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
-
 .home {
   padding-top: 3rem;
   margin-left: 4rem;
@@ -56,6 +52,7 @@ let homeViewStyle = `
 .feature-section .feature-card p {
   font-family: 'Rubik', sans-serif;
   padding-top: 10px;
+  line-height: 1.5;
 }
 
 .feature-section .feature-card a {
@@ -115,7 +112,7 @@ class HomeView extends BaseView {
             Meditation is a consciousness-changing technique that has been
             shown to have a wide number of benefits on psychological well-being
           </p>
-          <a href="/meditation-corner" spa-page-link>Go there</a>
+          <a href="/meditation-corner" spa-page-link="true">Go there</a>
         </div>
         <div class="feature-card">
           <h2>Meditation Corner</h2>

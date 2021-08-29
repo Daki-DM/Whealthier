@@ -2,6 +2,8 @@ import {
   Router
 } from './miscellaneous/router.js'
 import { NavBar } from './components/nav-bar/nav-bar.js';
+import { SectionBreaker } from './components/section-breaker/section-breaker.js';
+
 
 const apiData = {
   appId: '810208fd',
@@ -16,7 +18,7 @@ window.addEventListener('popstate', Router.router);
 
 document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', (event) => {
-    if(event.target.matches('[spa-page-link]')) {
+    if(event.target.getAttribute('spa-page-link') == 'true') {
       event.preventDefault();
       Router.navigateTo(event.target.href);
     }

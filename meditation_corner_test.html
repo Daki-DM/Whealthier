@@ -2,18 +2,23 @@
 <html>
 
 <style>
-    #play {
+    .mood_rainy {
+        position: fixed;
+        left: 20%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        border-color: black;
+        background-color: rgba(255, 255, 255, 0.322);
+    }
+    
+    .mood_fresh {
         position: fixed;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-    }
-    
-    #mood_rainy {
-        position: fixed;
-        left: 90%;
-        top: 20%;
-        transform: translate(-50%, -50%);
         border-radius: 50%;
         height: 50px;
         width: 50px;
@@ -21,9 +26,9 @@
         background-color: rgba(255, 255, 255, 0.322);
     }
     
-    #mood_fresh {
+    .mood_mountains {
         position: fixed;
-        left: 90%;
+        left: 80%;
         top: 50%;
         transform: translate(-50%, -50%);
         border-radius: 50%;
@@ -33,25 +38,83 @@
         background-color: rgba(255, 255, 255, 0.322);
     }
     
-    #mood_mountains {
-        position: fixed;
-        left: 90%;
-        top: 80%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        height: 50px;
-        width: 50px;
-        border-color: black;
-        background-color: rgba(255, 255, 255, 0.322);
+    .mood_mountains:hover {
+        transition-duration: 0.28s;
+        box-shadow: 0 0.9em 0.9em -0.38em rgb(255, 232, 131);
+        top: 48%;
+    }
+    
+    .mood_fresh:hover {
+        transition-duration: 0.28s;
+        box-shadow: 0 0.9em 0.9em -0.38em rgb(146, 255, 131);
+        top: 48%;
+    }
+    
+    .mood_rainy:hover {
+        transition-duration: 0.28s;
+        box-shadow: 0 0.9em 0.9em -0.38em rgb(131, 236, 255);
+        top: 48%;
+    }
+    
+    #detector {
+        width: 1520px;
+        height: 600px;
+        background-color: chartreuse;
+        display: none;
     }
 </style>
 
+<script>
+    function mood_rainy() {
+        document.getElementById("mood_rainy").style.transitionDuration = "1s";
+        document.getElementById("mood_rainy").style.top = "-100px";
+        document.getElementById("mood_fresh").style.transitionDuration = "1s";
+        document.getElementById("mood_fresh").style.top = "-100px";
+        document.getElementById("mood_mountains").style.transitionDuration = "1s";
+        document.getElementById("mood_mountains").style.top = "-100px";
+        sleep(200);
+        document.getElementById("detector").style.display = 'block';
 
-<button id="play">PLAY</button>
+    }
 
-<button id="mood_rainy"></button>
-<button id="mood_fresh"></button>
-<button id="mood_mountains"></button>
+    function mood_fresh() {
+        document.getElementById("mood_rainy").style.transitionDuration = "1s";
+        document.getElementById("mood_rainy").style.top = "-100px";
+        document.getElementById("mood_fresh").style.transitionDuration = "1s";
+        document.getElementById("mood_fresh").style.top = "-100px";
+        document.getElementById("mood_mountains").style.transitionDuration = "1s";
+        document.getElementById("mood_mountains").style.top = "-100px";
+        sleep(200);
+        document.getElementById("detector").style.display = 'block';
+
+    }
+
+    function mood_mountains() {
+        document.getElementById("mood_rainy").style.transitionDuration = "1s";
+        document.getElementById("mood_rainy").style.top = "-100px";
+        document.getElementById("mood_fresh").style.transitionDuration = "1s";
+        document.getElementById("mood_fresh").style.top = "-100px";
+        document.getElementById("mood_mountains").style.transitionDuration = "1s";
+        document.getElementById("mood_mountains").style.top = "-100px";
+        sleep(200);
+        document.getElementById("detector").style.display = 'block';
+
+    }
+
+    function detect() {
+
+        document.getElementById("mood_rainy").style.transitionDuration = "1s";
+        document.getElementById("mood_rainy").style.top = "50%";
+        document.getElementById("mood_fresh").style.transitionDuration = "1s";
+        document.getElementById("mood_fresh").style.top = "50%";
+        document.getElementById("mood_mountains").style.transitionDuration = "1s";
+        document.getElementById("mood_mountains").style.top = "50%";
+    }
+</script>
+<div id="detector" onmouseover="detect()"></div>
+<button class="mood_rainy butto" id="mood_rainy" onclick="mood_rainy()"></button>
+<button class="mood_fresh butto" id="mood_fresh" onclick="mood_fresh()"></button>
+<button class="mood_mountains butto" id="mood_mountains" onclick="mood_mountains()"></button>
 
 </body>
 

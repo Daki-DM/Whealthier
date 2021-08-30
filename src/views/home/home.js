@@ -115,9 +115,13 @@ class HomeView extends BaseView {
           <a href="/meditation-corner" spa-page-link="true">Go there</a>
         </div>
         <div class="feature-card">
-          <h2>Meditation Corner</h2>
-          <p>Take your minds to a rest</p>
-          <a>Go there</a>
+          <h2>Macro Calculator</h2>
+          <p>
+            Macro Calculator can say how much calories you need to eat a day. It
+            also gives a breakdown on how much fats, proteins and carbs you need
+            to eat.
+          </p>
+          <a href="/macro-calculator" spa-page-link="true">Go there</a>
         </div>
         <div class="feature-card">
           <h2>Meditation Corner</h2>

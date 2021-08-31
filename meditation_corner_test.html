@@ -2,6 +2,11 @@
 <html>
 
 <style>
+    body {
+        background-color: rgba(187, 187, 187, 0.521);
+        background-size: cover;
+    }
+    
     .mood_rainy {
         position: fixed;
         left: 20%;
@@ -58,9 +63,17 @@
     
     #detector {
         width: 1520px;
-        height: 600px;
+        height: 60px;
         background-color: chartreuse;
         display: none;
+    }
+    
+    #arrow {
+        position: fixed;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: yellow;
     }
 </style>
 
@@ -72,8 +85,9 @@
         document.getElementById("mood_fresh").style.top = "-100px";
         document.getElementById("mood_mountains").style.transitionDuration = "1s";
         document.getElementById("mood_mountains").style.top = "-100px";
-        sleep(200);
         document.getElementById("detector").style.display = 'block';
+
+        document.body.style.backgroundImage = 'url(images/reainy.jpg)';
 
     }
 
@@ -84,8 +98,13 @@
         document.getElementById("mood_fresh").style.top = "-100px";
         document.getElementById("mood_mountains").style.transitionDuration = "1s";
         document.getElementById("mood_mountains").style.top = "-100px";
-        sleep(200);
+
+        document.body.style.backgroundImage = 'url(images/fresh.jpg)';
+
+
         document.getElementById("detector").style.display = 'block';
+
+
 
     }
 
@@ -96,8 +115,15 @@
         document.getElementById("mood_fresh").style.top = "-100px";
         document.getElementById("mood_mountains").style.transitionDuration = "1s";
         document.getElementById("mood_mountains").style.top = "-100px";
-        sleep(200);
+
+        document.body.style.backgroundImage = 'url(images/mountains.jpg)';
+
+
         document.getElementById("detector").style.display = 'block';
+
+
+
+
 
     }
 
@@ -111,10 +137,13 @@
         document.getElementById("mood_mountains").style.top = "50%";
     }
 </script>
-<div id="detector" onmouseover="detect()"></div>
+<div id="detector" onmouseover="detect()">
+    <div id="arrow">DRAG UP HERE TO SEE BUTTONS AGAIN</div>
+</div>
 <button class="mood_rainy butto" id="mood_rainy" onclick="mood_rainy()"></button>
 <button class="mood_fresh butto" id="mood_fresh" onclick="mood_fresh()"></button>
 <button class="mood_mountains butto" id="mood_mountains" onclick="mood_mountains()"></button>
+
 
 </body>
 

@@ -5,6 +5,7 @@ let aboutViewStyle = `
   padding-top: 5rem;
   margin-left: 4rem;
   margin-right: 4rem;
+  padding-bottom: 4rem;
 }
 
 .about h2 {
@@ -77,6 +78,7 @@ let aboutViewStyle = `
     padding-top: 5rem;
     margin-left: 10px;
     margin-right: 10px;
+    padding-bottom: 2rem;
   }
   .about .container img {
     max-width: 100%;

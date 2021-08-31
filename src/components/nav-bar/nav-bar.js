@@ -22,6 +22,7 @@ navBarStyle.innerHTML = `
   background-color: rgba(255, 255, 255, .9);
   padding: 0 10px;
   box-sizing: border-box;
+  z-index: 20;
 }
 .nav-container.chip-off {
   position: fixed;

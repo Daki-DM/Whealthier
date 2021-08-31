@@ -66,6 +66,8 @@ let homeViewStyle = `
   margin-top: 10px;
   font-size: 1rem;
   text-decoration: none;
+  outline: none;
+  border: none;
 }
 
 @media (max-width: 768px) {

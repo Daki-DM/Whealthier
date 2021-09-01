@@ -73,7 +73,148 @@
         top: 10%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: yellow;
+    }
+    
+    #circle {
+        display: none;
+        /*Make the cicle*/
+        background-color: rgba(255, 255, 255, 0.85);
+        width: 33vh;
+        height: 33vh;
+        border-radius: 50%;
+        position: absolute;
+        /*To center button*/
+        top: 50%;
+        left: 50%;
+        /*Margin is half of height and width so that instead of centering the top left of the button, we are actually centering the button itself. Halfing to center image rather than top left margin of image*/
+        margin-top: -17.5vh;
+        margin-left: -17.5vh;
+    }
+    /* Animation only occurs when you hover!*/
+    
+    #circle {
+        animation-name: breathing-circle;
+        animation-duration: 11s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    
+    @keyframes breathing-circle {
+        0% {
+            transform: scale(1);
+        }
+        41% {
+            transform: scale(1.4);
+        }
+        49% {
+            transform: scale(1.4);
+        }
+        90% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    .popup {
+        font-size: 10vh;
+        color: rgba(0, 0, 0, 0);
+        font-family: 'Raleway', sans-serif;
+        position: absolute;
+        top: 33%;
+        left: 11%;
+    }
+    
+    #exhale-message {
+        /*The above left property didn't look very centered to me for exhale, so I am overiding it with the more specific id selector */
+        left: 7%;
+    }
+    
+    #circle #inhale-message {
+        animation-name: inh-direction;
+        animation-duration: 11s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    
+    #circle #exhale-message {
+        animation-name: exh-direction;
+        animation-duration: 11s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    
+    @keyframes inh-direction {
+        0% {
+            color: rgba(253, 193, 140, 0);
+        }
+        10% {
+            color: rgba(253, 193, 140, 1);
+        }
+        40% {
+            color: rgba(253, 193, 140, 1);
+        }
+        50% {
+            color: rgba(253, 193, 140, 0);
+        }
+    }
+    
+    @keyframes exh-direction {
+        0% {
+            color: rgba(253, 193, 140, 0);
+        }
+        50% {
+            color: rgba(253, 193, 140, 0);
+        }
+        60% {
+            color: rgba(253, 193, 140, 1);
+        }
+        90% {
+            color: rgba(253, 193, 140, 1);
+        }
+        100% {
+            color: rgba(253, 193, 140, 0);
+        }
+    }
+    
+    @keyframes link-jump {
+        0% {
+            color: rgba(0, 0, 0, 0.70);
+        }
+        100% {
+            color: black;
+        }
+    }
+    
+    #the-explanation {
+        display: none;
+        font-size: 0;
+        color: rgba(0, 0, 0, 0.70);
+        font-size: 2.55vh;
+        font-family: 'Raleway', sans-serif;
+        padding: 10px;
+        text-align: justify;
+    }
+    
+    #me {
+        font-family: 'Raleway', sans-serif;
+        font-size: 2.5vh;
+        color: rgba(0, 0, 0, 0.70);
+        position: absolute;
+        bottom: 35px;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    #close-explanation {
+        cursor: pointer;
+    }
+    
+    #arrow {
+        display: none;
+        font-size: 18px;
     }
 </style>
 
@@ -89,6 +230,15 @@
 
         document.body.style.backgroundImage = 'url(images/reainy.jpg)';
 
+        document.getElementById("detector").style.display = 'block';
+
+        document.getElementById("circle").style.display = 'block';
+
+        document.getElementById("arrow").style.display = 'block';
+        setTimeout(function() {
+            document.getElementById("arrow").style.display = 'none';
+        }, 3000);
+
     }
 
     function mood_fresh() {
@@ -103,6 +253,8 @@
 
 
         document.getElementById("detector").style.display = 'block';
+
+        document.getElementById("circle").style.display = 'block';
 
 
 
@@ -121,8 +273,7 @@
 
         document.getElementById("detector").style.display = 'block';
 
-
-
+        document.getElementById("circle").style.display = 'block';
 
 
     }
@@ -135,6 +286,8 @@
         document.getElementById("mood_fresh").style.top = "50%";
         document.getElementById("mood_mountains").style.transitionDuration = "1s";
         document.getElementById("mood_mountains").style.top = "50%";
+
+        document.getElementById("circle").style.display = 'none';
     }
 </script>
 <div id="detector" onmouseover="detect()">
@@ -144,6 +297,7 @@
 <button class="mood_fresh butto" id="mood_fresh" onclick="mood_fresh()"></button>
 <button class="mood_mountains butto" id="mood_mountains" onclick="mood_mountains()"></button>
 
+<div id="circle"></div>
 
 </body>
 

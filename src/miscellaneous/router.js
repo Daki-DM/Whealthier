@@ -33,7 +33,9 @@ class Router {
     }
     
     let view = new match.route.view();
-    document.getElementById('app').innerHTML = await view.getHtml();
+    let app = document.getElementById('app');
+    app.innerHTML = '';
+    app.innerHTML = await view.getHtml();
   }
   static navigateTo(url) {
     history.pushState(null, null, url);

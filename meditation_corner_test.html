@@ -64,7 +64,6 @@
     #detector {
         width: 1520px;
         height: 60px;
-        background-color: chartreuse;
         display: none;
     }
     
@@ -256,6 +255,11 @@
 
         document.getElementById("circle").style.display = 'block';
 
+        document.getElementById("arrow").style.display = 'block';
+        setTimeout(function() {
+            document.getElementById("arrow").style.display = 'none';
+        }, 3000);
+
 
 
     }
@@ -275,7 +279,10 @@
 
         document.getElementById("circle").style.display = 'block';
 
-
+        document.getElementById("arrow").style.display = 'block';
+        setTimeout(function() {
+            document.getElementById("arrow").style.display = 'none';
+        }, 3000);
     }
 
     function detect() {
@@ -288,6 +295,7 @@
         document.getElementById("mood_mountains").style.top = "50%";
 
         document.getElementById("circle").style.display = 'none';
+        document.getElementById("arrow").style.display = 'none';
     }
 </script>
 <div id="detector" onmouseover="detect()">

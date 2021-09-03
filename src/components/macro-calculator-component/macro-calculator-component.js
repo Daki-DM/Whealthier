@@ -281,7 +281,10 @@ class MacroCalculatorComponent extends HTMLElement {
     button.setAttribute('type', 'submit');
     button.innerText = 'Find!';
     
-    
+    button.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      this.calculate()
+    });
 
     form.appendChild(this.personDetails);
     form.appendChild(button);

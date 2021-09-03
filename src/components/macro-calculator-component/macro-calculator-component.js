@@ -309,7 +309,28 @@ class MacroCalculatorComponent extends HTMLElement {
     }
   }
   calculate() {
+    let age = inputsRequired[0].elem.value;
+    let height = inputsRequired[1].elem.value;
+    let weight = inputsRequired[2].elem.value;
+    let neckCircumference = inputsRequired[3].elem.value;
+    let waistCircumference = inputsRequired[4].elem.value;
+    let hipCircumference = 0;
     
+    let person = new Person();
+    
+    if(this.gender === 'female') {
+      hipCircumference = inputsRequired[5].elem.value;
+    }
+    
+    person.age = age;
+    person.height = height;
+    person.weight = weight;
+    person.neckCircumference = neckCircumference;
+    person.waistCircumference = waistCircumference;
+    person.hipCircumference = hipCircumference;
+    person.gender = this.gender === 'male' ? 0 : 1;
+    
+    console.log(person.findDailyCalorieIntake());
   }
 };
 

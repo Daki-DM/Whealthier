@@ -1,10 +1,12 @@
+import { Person } from '../../miscellaneous/person.js'
+
 let inputsRequired = [
-  { name: 'Age', id: 'age' },
-  { name: 'Height', id: 'height' },
-  { name: 'Weight', id: 'weight' },
-  { name: 'Neck Circumference', id: 'n-c' },
-  { name: 'Waist Circumference', id: 'w-c' },
-  { name: 'Hip Circumference', id: 'h-c' },
+  { name: 'Age', id: 'age', elem: null },
+  { name: 'Height', id: 'height', elem: null},
+  { name: 'Weight', id: 'weight', elem: null},
+  { name: 'Neck Circumference', id: 'n-c', elem: null},
+  { name: 'Waist Circumference', id: 'w-c', elem: null},
+  { name: 'Hip Circumference', id: 'h-c', elem: null},
 ];
 
 let macroCalculatorStyle = `
@@ -175,7 +177,7 @@ button {
 
 class MacroCalculatorComponent extends HTMLElement {
   personDetails = null;
-  gender = null;
+  gender = 'male';
   constructor() {
     super();
 
@@ -188,6 +190,9 @@ class MacroCalculatorComponent extends HTMLElement {
     heading.innerText = 'Macro Calculator';
 
     let form = document.createElement('form');
+    form.setAttribute('id', 'macro-calculator-form');
+    form.setAttribute('action', '');
+    form.setAttribute('method', 'get');
 
     this.personDetails = document.createElement('div');
     this.personDetails.classList.add('person-details');
@@ -254,9 +259,15 @@ class MacroCalculatorComponent extends HTMLElement {
 
       let input = document.createElement('input');
       input.setAttribute('id', obj.id);
+      input.setAttribute('name', obj.id);
       input.setAttribute('type', 'number');
       input.setAttribute('required', true);
       input.classList.add('text-input');
+      if(obj.id === 'h-c') {
+        input.id = 'hip-circumference';
+      }
+      
+      obj.elem = input;
 
       container.appendChild(label);
       container.appendChild(input);
@@ -264,11 +275,13 @@ class MacroCalculatorComponent extends HTMLElement {
       this.personDetails.appendChild(container);
     });
 
-    this.personDetails.lastElementChild.style.display = 'none';
+    this.personDetails.lastChild.style.display = 'none';
 
     let button = document.createElement('button');
     button.setAttribute('type', 'submit');
     button.innerText = 'Find!';
+    
+    
 
     form.appendChild(this.personDetails);
     form.appendChild(button);
@@ -285,10 +298,15 @@ class MacroCalculatorComponent extends HTMLElement {
     if (element.getAttribute('value') === 'male') {
       this.gender = 'male';
       this.personDetails.lastElementChild.style.display = 'none';
+      this.personDetails.lastChild.lastChild.setAttribute('required', false);
     } else if (element.getAttribute('value') === 'female') {
       this.gender = 'female';
       this.personDetails.lastElementChild.style.display = 'block';
+      this.personDetails.lastChild.lastChild.setAttribute('required', true);
     }
+  }
+  calculate() {
+    
   }
 };
 

@@ -4,7 +4,19 @@
 <style>
     body {
         background-color: rgba(187, 187, 187, 0.521);
+        background: no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
         background-size: cover;
+        background-image: url("background.jpg");
+    }
+    
+    button {
+        border: none;
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
     }
     
     .mood_rainy {
@@ -12,11 +24,9 @@
         left: 20%;
         top: 50%;
         transform: translate(-50%, -50%);
-        border-radius: 50%;
-        height: 50px;
-        width: 50px;
-        border-color: black;
         background-color: rgba(255, 255, 255, 0.322);
+        background-image: url("logos/rain.png");
+        background-size: cover;
     }
     
     .mood_fresh {
@@ -24,11 +34,9 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        border-radius: 50%;
-        height: 50px;
-        width: 50px;
-        border-color: black;
         background-color: rgba(255, 255, 255, 0.322);
+        background-image: url("logos/fresh.png");
+        background-size: cover;
     }
     
     .mood_mountains {
@@ -36,11 +44,9 @@
         left: 80%;
         top: 50%;
         transform: translate(-50%, -50%);
-        border-radius: 50%;
-        height: 50px;
-        width: 50px;
-        border-color: black;
         background-color: rgba(255, 255, 255, 0.322);
+        background-image: url("logos/mountains.png");
+        background-size: cover;
     }
     
     .mood_mountains:hover {
@@ -76,20 +82,16 @@
     
     #circle {
         display: none;
-        /*Make the cicle*/
         background-color: rgba(255, 255, 255, 0.85);
         width: 33vh;
         height: 33vh;
         border-radius: 50%;
         position: absolute;
-        /*To center button*/
         top: 50%;
         left: 50%;
-        /*Margin is half of height and width so that instead of centering the top left of the button, we are actually centering the button itself. Halfing to center image rather than top left margin of image*/
         margin-top: -17.5vh;
         margin-left: -17.5vh;
     }
-    /* Animation only occurs when you hover!*/
     
     #circle {
         animation-name: breathing-circle;
@@ -123,25 +125,6 @@
         position: absolute;
         top: 33%;
         left: 11%;
-    }
-    
-    #exhale-message {
-        /*The above left property didn't look very centered to me for exhale, so I am overiding it with the more specific id selector */
-        left: 7%;
-    }
-    
-    #circle #inhale-message {
-        animation-name: inh-direction;
-        animation-duration: 11s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-    }
-    
-    #circle #exhale-message {
-        animation-name: exh-direction;
-        animation-duration: 11s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
     }
     
     @keyframes inh-direction {
@@ -218,6 +201,7 @@
 </style>
 
 <script>
+    /*WHat happens when you press the blue button (sets background, makes buttons dissaper)*/
     function mood_rainy() {
         document.getElementById("mood_rainy").style.transitionDuration = "1s";
         document.getElementById("mood_rainy").style.top = "-100px";
@@ -238,8 +222,10 @@
             document.getElementById("arrow").style.display = 'none';
         }, 3000);
 
-    }
+        document.getElementById("audio_rainy").play();
 
+    }
+    /*WHat happens when you press the blue green (sets background, makes buttons dissaper)*/
     function mood_fresh() {
         document.getElementById("mood_rainy").style.transitionDuration = "1s";
         document.getElementById("mood_rainy").style.top = "-100px";
@@ -260,10 +246,10 @@
             document.getElementById("arrow").style.display = 'none';
         }, 3000);
 
-
+        document.getElementById("audio_fresh").play();
 
     }
-
+    /*WHat happens when you press the blue prange (sets background, makes buttons dissaper)*/
     function mood_mountains() {
         document.getElementById("mood_rainy").style.transitionDuration = "1s";
         document.getElementById("mood_rainy").style.top = "-100px";
@@ -283,6 +269,8 @@
         setTimeout(function() {
             document.getElementById("arrow").style.display = 'none';
         }, 3000);
+
+        document.getElementById("audio_mountains").play();
     }
 
     function detect() {
@@ -296,8 +284,13 @@
 
         document.getElementById("circle").style.display = 'none';
         document.getElementById("arrow").style.display = 'none';
+
+        document.getElementById("audio_mountains").pause();
+        document.getElementById("audio_fresh").pause();
+        document.getElementById("audio_rainy").pause();
     }
 </script>
+
 <div id="detector" onmouseover="detect()">
     <div id="arrow">DRAG UP HERE TO SEE BUTTONS AGAIN</div>
 </div>
@@ -307,6 +300,13 @@
 
 <div id="circle"></div>
 
+
+<audio src="/music/rainy.mp3" id="audio_rainy">
+</audio>
+<audio src="music/fresh.mp3" id="audio_fresh">
+</audio>
+<audio src="music/mountain.mp3" id="audio_mountains">
+</audio>
 </body>
 
 </html>

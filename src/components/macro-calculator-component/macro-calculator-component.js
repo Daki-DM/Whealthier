@@ -27,8 +27,8 @@ let activityLevelInputRequired = [
 
 let workoutGoal = [
   { name: 'loss', execute: (v) => { return ((v * 19) / 100)} },
-  { name: 'gain', execute: (v) => { return (v + 500) }},
-  { name: 'maintain', execute: (v) => { return (v * 1) }}
+  { name: 'gain', execute: (v) => (-500) },
+  { name: 'maintain', execute: (v) => (-0) }
 ];
 
 let goalInputRequired = [
@@ -41,6 +41,12 @@ let macroForWorkoutGoal = [
   { name: 'loss', carb: 40, protein: 40, fat: 20},
   { name: 'gain', carb: 40, protein: 30, fat: 30},
   { name: 'maintain', carb: 40, protein: 30, fat: 30}
+];
+
+let macroImageLinks = [
+  { link: 'https://img.icons8.com/ios/100/000000/cake.png' },
+  { link: 'https://img.icons8.com/ios/90/000000/fish.png' },
+  { link: 'https://img.icons8.com/ios/100/000000/corn.png' }
 ];
 
 let macroCalculatorStyle = `
@@ -90,6 +96,7 @@ form {
   color: #F2F2F2;
   font-size: 1.1rem;
   font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   min-width: 100%;
   width: 100%;
 }
@@ -198,6 +205,65 @@ button {
   justify-self: start;
 }
 
+.output {
+  box-sizing: border-box;
+  background-color: #F2F2F2;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 10px;
+}
+
+.output-container {
+  display: flex;
+  min-width: 100%;
+}
+
+.output-img-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  min-width: 100%;
+  align-items: center;
+}
+
+.img-label-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-label-container img {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 0 8px rgba(31, 38, 135, 0.37);
+}
+
+.img-label-container p {
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1rem;
+  display: inline-block;
+}
+
+.more-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: start;
+}
+
+.more-info p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1rem;
+  display: inline-block;
+}
+
 @media (max-width: 768px) {
   .macro-calculator {
     padding-top: 5rem;
@@ -211,6 +277,13 @@ button {
     max-width: calc(100% - 20px) !important;
     min-width: auto;
   }
+  .output-img-container {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .more-info {
+    grid-template-columns: 1fr;
+  }
 }
 `;
 
@@ -219,6 +292,7 @@ class MacroCalculatorComponent extends HTMLElement {
   gender = 'male';
   activityLevelDetails = 'sedentary';
   workoutGoalChoosen = 'loss';
+  result = document.createElement('div');
   constructor() {
     super();
     let context = this;
@@ -230,6 +304,8 @@ class MacroCalculatorComponent extends HTMLElement {
     
     let heading = document.createElement('h2');
     heading.innerText = 'Macro Calculator';
+    
+    this.result.classList.add('output');
 
     let form = document.createElement('form');
     form.setAttribute('id', 'macro-calculator-form');
@@ -409,13 +485,15 @@ class MacroCalculatorComponent extends HTMLElement {
     
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
-      this.calculate()
+      this.calculate();
+      this.result.style.padding = '20px';
     });
 
     form.appendChild(this.personDetails);
     form.appendChild(button);
 
     content.appendChild(heading);
+    content.appendChild(this.result);
     content.appendChild(form);
     let style = document.createElement('style');
     style.innerHTML = macroCalculatorStyle;
@@ -469,9 +547,85 @@ class MacroCalculatorComponent extends HTMLElement {
     
     let calorieBasedOnGoal = activityLevelBmr - workoutGoal.find(goal => goal.name === this.workoutGoalChoosen).execute(activityLevelBmr);
     let macroValuesBasedOnGoal = macroForWorkoutGoal.find(goal => goal.name === this.workoutGoalChoosen);
-    let carb = roundTo2DecimalPlaces(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.carb)/4);
-    let protein = roundTo2DecimalPlaces(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.protein)/4);
-    let fat = roundTo2DecimalPlaces(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.fat)/9);
+    let carb = Math.round(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.carb)/4);
+    let protein = Math.round(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.protein)/4);
+    let fat = Math.round(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.fat)/9);
+    
+    this.renderOutput(
+      bodyMassIndex,
+      bodyFatPercentage,
+      dailyCalorieIntake,
+      activityLevelBmr,
+      carb,
+      protein,
+      fat
+    );
+  }
+  renderOutput(
+    bmi,
+    bfp,
+    dci,
+    bmr,
+    carb,
+    protein,
+    fat
+  ) {
+    this.result.innerHTML = '';
+    let container = document.createElement('div');
+    container.classList.add('output-container');
+    
+    let imgContainer = document.createElement('div');
+    imgContainer.classList.add('output-img-container');
+    
+    macroImageLinks.forEach((v, i) => {
+      let img = document.createElement('img');
+      img.src = v.link;
+      img.classList.add('output-img');
+      
+      let label = document.createElement('p');
+      label.classList.add('output-macro-label');
+      
+      if(i === 2) {
+        label.innerText = `${carb}g Carbs/day`;
+      } else if(i === 1) {
+        label.innerText = `${protein}g Protein/day`;
+      } else if(i === 0) {
+        label.innerText = `${fat}g Fat/day`;
+      }
+      
+      let imgLabelContainer = document.createElement('div');
+      imgLabelContainer.classList.add('img-label-container');
+      
+      imgLabelContainer.append(img, label);
+      imgContainer.appendChild(imgLabelContainer);
+    });
+    container.appendChild(imgContainer);
+    
+    let moreInfo = document.createElement('div');
+    moreInfo.classList.add('more-info');
+    
+    let bmiText = document.createElement('p');
+    bmiText.innerText = `Body Mass Index: ${roundTo2DecimalPlaces(bmi)}`;
+    
+    let bfpText = document.createElement('p');
+    bfpText.innerText = `Body Fat Percentage: ${roundTo2DecimalPlaces(bfp)}%`;
+    
+    let dciText = document.createElement('p');
+    dciText.innerText = `Daily Calorie Intake: ${roundTo2DecimalPlaces(dci)} calories`;
+    
+    let bmrText = document.createElement('p');
+    bmrText.innerText = `Basal Metabolic Rate: ${roundTo2DecimalPlaces(bmr)} calories/day`;
+    
+    moreInfo.append(
+      bmiText,
+      bfpText,
+      dciText,
+      bmrText
+    );
+    
+    this.result.append(container, moreInfo);
+    document.body.scrollTop = '0';
+    document.documentElement.scrollTop = '0';
   }
 };
 

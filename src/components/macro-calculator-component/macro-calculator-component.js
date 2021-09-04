@@ -1,10 +1,46 @@
+import { Person, roundTo2DecimalPlaces } from '../../miscellaneous/person.js'
+
 let inputsRequired = [
-  { name: 'Age', id: 'age' },
-  { name: 'Height', id: 'height' },
-  { name: 'Weight', id: 'weight' },
-  { name: 'Neck Circumference', id: 'n-c' },
-  { name: 'Waist Circumference', id: 'w-c' },
-  { name: 'Hip Circumference', id: 'h-c' },
+  { name: 'Age', id: 'age', elem: null },
+  { name: 'Height', id: 'height', elem: null},
+  { name: 'Weight', id: 'weight', elem: null},
+  { name: 'Neck Circumference', id: 'n-c', elem: null},
+  { name: 'Waist Circumference', id: 'w-c', elem: null},
+  { name: 'Hip Circumference', id: 'h-c', elem: null},
+];
+
+let activityLevel = [
+  { name: 'sedentary', value: 1.2 },
+  { name: 'lightlyActive', value: 1.375 },
+  { name: 'moderatelyActive', value: 1.550 },
+  { name: 'veryActive', value: 1.725 },
+  { name: 'extraActive', value: 1.9 }
+];
+
+let activityLevelInputRequired = [
+  { name: 'Sedentary', id: 'sedentary', desc: 'Little to no exercise' },
+  { name: 'Light Activity', id: 'lightlyActive', desc: 'Light Exercise/Sports 3-5 days a week' },
+  { name: 'Moderate Activity', id: 'moderatelyActive', desc: 'Moderate Exercise/Sports 3-5 days a week' },
+  { name: 'Very Active', id: 'veryActive', desc: 'Hard Exercise/Sports 6-7 days a week' },
+  { name: 'Extra Active', id: 'extraActive', desc: 'Hard Exercise/Sports 6-7 days a week and physical job'}
+];
+
+let workoutGoal = [
+  { name: 'loss', execute: (v) => { return ((v * 19) / 100)} },
+  { name: 'gain', execute: (v) => { return (v + 500) }},
+  { name: 'maintain', execute: (v) => { return (v * 1) }}
+];
+
+let goalInputRequired = [
+  { name: 'Weight Loss', id: 'loss' },
+  { name: 'Weight Gain', id: 'gain' },
+  { name: 'Maintain Weight', id: 'maintain' },
+];
+
+let macroForWorkoutGoal = [
+  { name: 'loss', carb: 40, protein: 40, fat: 20},
+  { name: 'gain', carb: 40, protein: 30, fat: 30},
+  { name: 'maintain', carb: 40, protein: 30, fat: 30}
 ];
 
 let macroCalculatorStyle = `
@@ -86,7 +122,7 @@ form {
   grid-column: 1/-1;
 }
 
-.gender-details .heading {
+.heading {
   font-size: 1rem;
   font-family: 'Rubik', sans-serif;
   font-weight: 600;
@@ -103,7 +139,12 @@ form {
   gap: 1rem;
 }
 
-.gender-details .radio {
+.workout-goal .radio-container,
+.activity-level .radio-container {
+  flex-direction: column;
+}
+
+.radio {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -154,7 +195,7 @@ button {
   text-decoration: none;
   outline: none;
   border: none;
-  justify-self: center;
+  justify-self: start;
 }
 
 @media (max-width: 768px) {
@@ -175,9 +216,12 @@ button {
 
 class MacroCalculatorComponent extends HTMLElement {
   personDetails = null;
-  gender = null;
+  gender = 'male';
+  activityLevelDetails = 'sedentary';
+  workoutGoalChoosen = 'loss';
   constructor() {
     super();
+    let context = this;
 
     let shadow = this.attachShadow({ mode: 'open' });
 
@@ -188,6 +232,9 @@ class MacroCalculatorComponent extends HTMLElement {
     heading.innerText = 'Macro Calculator';
 
     let form = document.createElement('form');
+    form.setAttribute('id', 'macro-calculator-form');
+    form.setAttribute('action', '');
+    form.setAttribute('method', 'get');
 
     this.personDetails = document.createElement('div');
     this.personDetails.classList.add('person-details');
@@ -254,21 +301,116 @@ class MacroCalculatorComponent extends HTMLElement {
 
       let input = document.createElement('input');
       input.setAttribute('id', obj.id);
+      input.setAttribute('name', obj.id);
       input.setAttribute('type', 'number');
       input.setAttribute('required', true);
+      input.setAttribute('step', 0.1);
       input.classList.add('text-input');
+      
+      obj.elem = input;
 
       container.appendChild(label);
       container.appendChild(input);
 
       this.personDetails.appendChild(container);
     });
+    
+    let workoutGoalDetails = document.createElement('div');
+    workoutGoalDetails.classList.add('workout-goal');
+    
+    let workoutGoalContainer = document.createElement('div');
+    workoutGoalContainer.classList.add('workout-goal-container');
+    
+    let workoutGoalDetailsHeading = document.createElement('p');
+    workoutGoalDetailsHeading.innerText = 'Workout Goal';
+    workoutGoalDetailsHeading.classList.add('heading');
+    
+    workoutGoalContainer.appendChild(workoutGoalDetailsHeading);
+    
+    let workoutGoalRadioContainer = document.createElement('div');
+    workoutGoalRadioContainer.classList.add('radio-container');
+    
+    goalInputRequired.forEach((obj, index) => {
+      let radioDiv = document.createElement('div');
+      radioDiv.classList.add('.radio');
 
-    this.personDetails.lastElementChild.style.display = 'none';
+      let radioInput = document.createElement('input');
+      radioInput.setAttribute('type', 'radio');
+      radioInput.setAttribute('id', obj.id);
+      radioInput.setAttribute('name', 'goal');
+      radioInput.setAttribute('value', obj.id);
+      
+      if(index === 0) radioInput.setAttribute('checked', 'checked');
+      radioInput.addEventListener('click', (ev) => {
+        context.workoutGoalChoosen = ev.target.getAttribute('id');
+      });
+      
+      let radioLabel = document.createElement('label');
+      radioLabel.setAttribute('for', obj.id);
+      radioLabel.innerText = obj.name;
+
+      radioDiv.append(radioInput, radioLabel);
+
+      workoutGoalRadioContainer.appendChild(radioDiv);
+    });
+    
+    workoutGoalContainer.appendChild(workoutGoalRadioContainer);
+    workoutGoalDetails.appendChild(workoutGoalContainer);
+    
+    this.personDetails.appendChild(workoutGoalDetails);
+    
+    let activityLevelDetails = document.createElement('div');
+    activityLevelDetails.classList.add('activity-level');
+    
+    let activityLevelContainer = document.createElement('div');
+    activityLevelContainer.classList.add('activity-level-container');
+    
+    let activityLevelDetailsHeading = document.createElement('p');
+    activityLevelDetailsHeading.innerText = 'Activity Level';
+    activityLevelDetailsHeading.classList.add('heading');
+    
+    activityLevelContainer.appendChild(activityLevelDetailsHeading);
+    
+    let activityLevelRadioContainer = document.createElement('div');
+    activityLevelRadioContainer.classList.add('radio-container');
+    
+    activityLevelInputRequired.forEach((obj, index) => {
+      let radioDiv = document.createElement('div');
+      radioDiv.classList.add('.radio');
+
+      let radioInput = document.createElement('input');
+      radioInput.setAttribute('type', 'radio');
+      radioInput.setAttribute('id', obj.id);
+      radioInput.setAttribute('name', 'activity-level');
+      radioInput.setAttribute('value', obj.id);
+      
+      if(index === 0) radioInput.setAttribute('checked', 'checked');
+      radioInput.addEventListener('click', (ev) => {
+        context.activityLevelDetails = ev.target.getAttribute('id');
+      });
+      
+      let radioLabel = document.createElement('label');
+      radioLabel.setAttribute('for', obj.id);
+      radioLabel.innerText = obj.name;
+
+      radioDiv.append(radioInput, radioLabel);
+
+      activityLevelRadioContainer.appendChild(radioDiv);
+    });
+    
+    activityLevelContainer.appendChild(activityLevelRadioContainer);
+    activityLevelDetails.appendChild(activityLevelContainer);
+    
+    this.personDetails.appendChild(activityLevelDetails);
 
     let button = document.createElement('button');
     button.setAttribute('type', 'submit');
     button.innerText = 'Find!';
+    
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      this.calculate()
+    });
 
     form.appendChild(this.personDetails);
     form.appendChild(button);
@@ -284,11 +426,52 @@ class MacroCalculatorComponent extends HTMLElement {
   genderRadioClickListener(element) {
     if (element.getAttribute('value') === 'male') {
       this.gender = 'male';
-      this.personDetails.lastElementChild.style.display = 'none';
     } else if (element.getAttribute('value') === 'female') {
       this.gender = 'female';
-      this.personDetails.lastElementChild.style.display = 'block';
     }
+  }
+  calculate() {
+    let age = inputsRequired[0].elem.value;
+    let height = inputsRequired[1].elem.value;
+    let weight = inputsRequired[2].elem.value;
+    let neckCircumference = inputsRequired[3].elem.value;
+    let waistCircumference = inputsRequired[4].elem.value;
+    let hipCircumference = 0;
+    
+    let person = new Person();
+    
+    if(this.gender === 'female') {
+      hipCircumference = inputsRequired[5].elem.value;
+    }
+    
+    person.age = age;
+    person.height = height;
+    person.weight = weight;
+    person.neckCircumference = neckCircumference;
+    person.waistCircumference = waistCircumference;
+    person.hipCircumference = hipCircumference;
+    
+    if(this.gender === 'male') {
+      person.gender = 0;
+    } else if(this.gender === 'female') {
+      person.gender = 1;
+    }
+    
+    let bodyMassIndex = person.findBMI();
+    let bodyFatPercentage = person.findBodyFatPercentage();
+    let dailyCalorieIntake = person.findDailyCalorieIntake();
+    let bmr = person.findBMR(dailyCalorieIntake);
+    let activityLevelBmr = bmr * activityLevel.find(lvl => lvl.name === this.activityLevelDetails).value;
+    
+    function valueFromPercentage(v, p) {
+      return ((v * p) / 100);
+    }
+    
+    let calorieBasedOnGoal = activityLevelBmr - workoutGoal.find(goal => goal.name === this.workoutGoalChoosen).execute(activityLevelBmr);
+    let macroValuesBasedOnGoal = macroForWorkoutGoal.find(goal => goal.name === this.workoutGoalChoosen);
+    let carb = roundTo2DecimalPlaces(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.carb)/4);
+    let protein = roundTo2DecimalPlaces(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.protein)/4);
+    let fat = roundTo2DecimalPlaces(valueFromPercentage(calorieBasedOnGoal, macroValuesBasedOnGoal.fat)/9);
   }
 };
 

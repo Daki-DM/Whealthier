@@ -92,8 +92,21 @@ class Person {
     
     return roundTo2DecimalPlaces((mifflinStJeorValue + revisedHarrisBenedictValue)/2);
   }
+  findBMR(dailyCalorieIntake) {
+    let bmr;
+    // Male
+    if(this.gender === 0) {
+      bmr = 10 * this.weight + 6.25 * this.height - 5 * this.age + 5 * (dailyCalorieIntake/1000);
+    }
+    // Female
+    else if(this.gender === 1) {
+      bmr = 10 * this.weight + 6.25 * this.height - 5 * this.age - 161 * (dailyCalorieIntake/1000);
+    }
+    return bmr;
+  }
 }
 
 export {
-  Person
+  Person,
+  roundTo2DecimalPlaces
 };

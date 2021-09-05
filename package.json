@@ -24,5 +24,8 @@
   "devDependencies": {
     "express": "^4.17.1",
     "rollup": "^2.56.2"
+  },
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.4"
   }
 }

@@ -126,9 +126,13 @@ class HomeView extends BaseView {
           <a href="/macro-calculator" spa-page-link="true">Go there</a>
         </div>
         <div class="feature-card">
-          <h2>Meditation Corner</h2>
-          <p>Take your minds to a rest</p>
-          <a>Go there</a>
+          <h2>Diet Planner</h2>
+          <p>
+            Diet Planner can provide a personalised diet plan according to your
+            preferences. Just provide how many meals you eat a day and your
+            health preferences. And you will get your custom diet plan.
+          </p>
+          <a href="/diet-planner" spa-page-link="true">Go there</a>
         </div>
       </div>
 

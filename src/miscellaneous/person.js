@@ -2,6 +2,10 @@ const roundTo2DecimalPlaces = (n) => {
   return Math.round((n + Number.EPSILON) * 100) / 100;
 };
 
+const toInches = (n) => {
+  return roundTo2DecimalPlaces(n / 2.54);
+};
+
 class Person {
   height = 0;
   weight = 0;
@@ -33,25 +37,19 @@ class Person {
     let bodyFatPercentage;
     // Male
     if(this.gender === 0) {
-      bodyFatPercentage = 495 /
-        (1.0324 - 0.19077 *
-          log10(this.waistCircumference - this.neckCircumference) +
-          0.15456 *
-          log10(this.height)
-        ) - 450;
+      bodyFatPercentage = 86.010 *
+        log10(toInches(this.waistCircumference - this.neckCircumference)) -
+        70.041 * log10(toInches(this.height)) +
+        36.76;
     }
     // Female
     else if(this.gender === 1) {
-      bodyFatPercentage = 495 /
-        (1.29579 - 0.35004 *
-          log10(
-            this.waistCircumference +
-            this.hipCircumference -
-            this.neckCircumference
-          ) +
-          0.22100 *
-          log10(this.height)
-        ) - 450;
+      bodyFatPercentage = 163.205 *
+        log10(
+          toInches(this.waistCircumference) +
+          toInches(this.hipCircumference) -
+          toInches(this.neckCircumference)
+        ) - 97.684 * log10(toInches(this.height)) - 78.387;
     }
     return roundTo2DecimalPlaces(bodyFatPercentage);
   }

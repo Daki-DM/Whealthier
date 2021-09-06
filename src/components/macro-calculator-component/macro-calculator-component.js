@@ -514,16 +514,12 @@ class MacroCalculatorComponent extends HTMLElement {
     let weight = inputsRequired[2].elem.value;
     let neckCircumference = inputsRequired[3].elem.value;
     let waistCircumference = inputsRequired[4].elem.value;
-    let hipCircumference = 0;
+    let hipCircumference = inputsRequired[5].elem?.value;
     
     let person = new Person();
     
-    if(this.gender === 'female') {
-      hipCircumference = inputsRequired[5].elem.value;
-    }
-    
     person.age = age;
-    person.height = height;
+    person.height = height;10
     person.weight = weight;
     person.neckCircumference = neckCircumference;
     person.waistCircumference = waistCircumference;
@@ -624,8 +620,7 @@ class MacroCalculatorComponent extends HTMLElement {
     );
     
     this.result.append(container, moreInfo);
-    document.body.scrollTop = '0';
-    document.documentElement.scrollTop = '0';
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }
 };
 

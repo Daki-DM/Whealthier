@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "install-deps": "npm i --no-bin-links",
-    "build": "node ./node_modules/rollup/dist/bin/rollup -cw",
+    "build-dev": "node ./node_modules/rollup/dist/bin/rollup -cw",
     "serve": "serve"
   },
   "repository": {

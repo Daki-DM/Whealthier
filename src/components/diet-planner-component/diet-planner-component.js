@@ -1,6 +1,10 @@
+import {
+  getDietPlan
+} from '../../miscellaneous/getDietPlan.js';
+
 let dietPlanData = [
-  { name: 'Weekly', value: 'weekly' },
-  { name: 'Daily', value: 'daily' }
+  { name: 'Weekly', value: '7' },
+  { name: 'Daily', value: '1' }
 ];
 
 let healthPreference = [
@@ -89,6 +93,17 @@ select::-ms-expand {
   justify-content: space-between;
   align-items: center;
   max-width: max-content;
+  height: 20px;
+  margin-top: 10px;
+}
+
+.radio-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: max-content;
+  height: 20px;
+  margin-top: 10px;
 }
 
 input[type=checkbox] {
@@ -111,42 +126,84 @@ input[type=checkbox]:checked {
   background-color: rgba(81, 88, 185, 1.0);
 }
 
-input[type='radio'] {
-  visibility: hidden;
-  margin-right: 0.5rem;
-  margin-right: 13px;
-}
-
-input[type='radio']:after {
-  width: 20px;
+input[type=radio] {
   height: 20px;
-  border-radius: 20px;
-  position: relative;
+  width: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 4px;
+  outline: none;
+  transition-duration: 0.1s;
+  border: 2px solid rgba(81, 88, 185, 1.0);
   background-color: transparent;
-  content: '';
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid rgba(81, 88, 185, 1.0);
-  box-sizing: border-box;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 10px;
 }
 
-input[type='radio']:checked:after {
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-  position: relative;
+input[type=radio]:checked {
   background-color: rgba(81, 88, 185, 1.0);
-  content: '';
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid rgba(81, 88, 185, 1.0);
-  box-sizing: border-box;
 }
 
-.input-label-radio-container {
+.input-label-radio-checkbox-container {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  justify-content: start;
+}
+
+.output {
+  width: 100;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  background-color: #F2F2F2;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+.diet-card {
+  border-radius: 10px;
+  background-color: #F2F2F2;
+  box-shadow: 0 0 8px rgba(31, 38, 135, 0.37);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.diet-card h3 {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.diet-card img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.diet-card p {
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+button {
+  display: inline-block;
+  font-family: Arial;
+  font-weight: 700;
+  padding: 7px 17px;
+  background-color: rgba(81, 88, 185, 1.0);
+  color: #F2F2F2;
+  border-radius: 5px;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  justify-self: start;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -158,14 +215,18 @@ input[type='radio']:checked:after {
   form {
     grid-template-columns: 1fr;
   }
+  .output {
+    grid-template-columns: 1fr;
+  }
 }
 `;
 
 class DietPlannerComponent extends HTMLElement {
-  mealCount = 3;
-  dietPlan = 'weekly';
+  mealCount = 'three';
+  dietPlan = '1';
   healthLabels = new Set();
   dietPreference = 'balanced';
+  output = document.createElement('div');
   constructor() {
     super();
 
@@ -173,11 +234,14 @@ class DietPlannerComponent extends HTMLElement {
 
     let content = document.createElement('div');
     content.classList.add('diet-planner');
-
+    
     let heading = document.createElement('h2');
     heading.innerText = 'Diet Planner';
 
     content.appendChild(heading);
+    
+    this.output.classList.add('output');
+    content.appendChild(this.output);
 
     // form
     let form = document.createElement('form');
@@ -188,14 +252,18 @@ class DietPlannerComponent extends HTMLElement {
     noOfMealsSpinner.setAttribute('name', 'no-meal-spinner')
     noOfMealsSpinner.setAttribute('id', 'no-meal-select');
     [
-      {name: '3', value: '3'},
-      {name: '4', value: '4'},
-      {name: '5', value: '5'},
+      {name: '3', value: 'three'},
+      {name: '4', value: 'four'},
+      {name: '5', value: 'five'},
     ].forEach(plan => {
       let option = document.createElement('option');
       option.setAttribute('value', plan.value);
       option.innerText = plan.name;
       noOfMealsSpinner.appendChild(option);
+    });
+    noOfMealsSpinner.addEventListener('change', (ev) => {
+      ev.preventDefault();
+      this.mealCount = noOfMealsSpinner.options[noOfMealsSpinner.selectedIndex].value;
     });
     let noOfMealsLabel = document.createElement('label');
     noOfMealsLabel.innerHTML = 'Number of meals a day';
@@ -214,6 +282,11 @@ class DietPlannerComponent extends HTMLElement {
       option.innerText = plan.name;
       dietPlanSpinner.appendChild(option);
     });
+    dietPlanSpinner.selectedIndex = '1';
+    dietPlanSpinner.addEventListener('change', (ev) => {
+      ev.preventDefault();
+      this.dietPlan = dietPlanSpinner.options[dietPlanSpinner.selectedIndex].value;
+    });
     let dietPlanLabel = document.createElement('label');
     dietPlanLabel.innerHTML = 'Diet Plan';
     dietPlanLabel.setAttribute('for', 'diet-plan-select');
@@ -223,6 +296,7 @@ class DietPlannerComponent extends HTMLElement {
     let healthLabelContainer = document.createElement('div');
     healthLabelContainer.classList.add('input-label-container');
     let healthLabelCheckBoxContainer = document.createElement('div');
+    healthLabelCheckBoxContainer.classList.add('input-label-radio-checkbox-container');
     healthPreference.forEach(preference => {
       let checkBoxContainer = document.createElement('div');
       checkBoxContainer.classList.add('checkbox-container');
@@ -231,6 +305,16 @@ class DietPlannerComponent extends HTMLElement {
       checkBox.setAttribute('type', 'checkbox');
       checkBox.setAttribute('id', preference.value);
       checkBox.classList.add('checkbox');
+      
+      checkBox.addEventListener('change', (ev) => {
+        ev.preventDefault();
+        let value = ev.target.getAttribute('id');
+        if(ev.target.checked) {
+          this.healthLabels.add(value);
+        } else {
+          if(this.healthLabels.has(value)) this.healthLabels.delete(value);
+        }
+      });
       
       let checkBoxLabel = document.createElement('label');
       checkBoxLabel.innerHTML = preference.name;
@@ -246,7 +330,7 @@ class DietPlannerComponent extends HTMLElement {
     let dietLabelContainer = document.createElement('div');
     dietLabelContainer.classList.add('input-label-container');
     let dietLabelRadioContainer = document.createElement('div');
-    dietLabelRadioContainer.classList.add('input-label-radio-container');
+    dietLabelRadioContainer.classList.add('input-label-radio-checkbox-container');
     dietPreferences.forEach((preference, i) => {
       let radioContainer = document.createElement('div');
       radioContainer.classList.add('radio-container');
@@ -257,6 +341,9 @@ class DietPlannerComponent extends HTMLElement {
       radioBox.setAttribute('id', preference.value);
       radioBox.setAttribute('value', preference.value);
       if(i === 0) radioBox.setAttribute('checked', true);
+      radioBox.addEventListener('click', (ev) => {
+        this.dietPreference = ev.target.getAttribute('id');
+      });
       
       let radioBoxLabel = document.createElement('label');
       radioBoxLabel.innerHTML = preference.name;
@@ -268,14 +355,26 @@ class DietPlannerComponent extends HTMLElement {
     let dietLabelLabel = document.createElement('label');
     dietLabelLabel.innerHTML = 'Diet Label';
     dietLabelContainer.append(dietLabelLabel, dietLabelRadioContainer);
-
+    
+    let button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.innerText = 'Get Plan';
 
     form.append(
       noOfMealsContainer,
       dietPlanSpinnerContainer,
       healthLabelContainer,
-      dietLabelContainer
+      dietLabelContainer,
+      button
     );
+    
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      this.calculate();
+      this.output.style.padding = '20px';
+      this.output.style.marginBottom = '20px';
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
     
     content.appendChild(form);
 
@@ -284,6 +383,69 @@ class DietPlannerComponent extends HTMLElement {
     content.appendChild(style);
 
     shadow.appendChild(content);
+  }
+  calculate() {
+    getDietPlan(
+      {
+        planType: this.dietPlan.toString(),
+        mealCount: this.mealCount,
+        healthPreferences: Array.from(this.healthLabels),
+        diet: this.dietPreference
+      }
+    )
+    .then(v => v.json())
+    .then(v => {
+      let recipes = [];
+      v.forEach(data => {
+        let recipe = data[0].recipe;
+        recipes.push(recipe);
+      });
+      this.renderOutput(recipes);
+    });
+  }
+  renderOutput(recipes) {
+    this.output.innerHTML = '';
+    recipes.forEach(recipe => {
+      let label = recipe.label;
+      let calories = recipe.calories;
+      let image = recipe.image;
+      let healthLabels = recipe.healthLabels;
+      let mealTypes = recipe.mealType;
+      let cuisineTypes = recipe.cuisineType;
+      let dishTypes = recipe.dishType;
+      
+      let dietCard = document.createElement('div');
+      dietCard.classList.add('diet-card');
+      
+      let recipeName = document.createElement('h3');
+      recipeName.innerText = label;
+      
+      let recipeImage = document.createElement('img');
+      recipeImage.src = image;
+      
+      let recipeCal = document.createElement('p');
+      recipeCal.innerText = `Calories: ${Math.round(calories)}`;
+      
+      let recipeMealType = document.createElement('p');
+      recipeMealType.innerText = `Meal Type: ${(mealTypes && mealTypes.length) > 0 ? mealTypes.slice(0, 3).join(', ') : 'Unknown'}`;
+      
+      let recipeCuisineType = document.createElement('p');
+      recipeCuisineType.innerText = `Cuisine Type: ${(cuisineTypes && cuisineTypes.length) > 0 ? cuisineTypes.slice(0, 3).join(', ') : 'Unknown'}`;
+      
+      let recipeDishType = document.createElement('p');
+      recipeDishType.innerText = `Dish Type: ${(dishTypes && dishTypes.length) > 0 ? dishTypes.slice(0, 3).join(', ') : 'Unknown'}`;
+      
+      dietCard.append(
+        recipeImage,
+        recipeName,
+        recipeCal,
+        recipeMealType,
+        recipeCuisineType,
+        recipeDishType
+      );
+
+      this.output.appendChild(dietCard);
+    });
   }
 }
 

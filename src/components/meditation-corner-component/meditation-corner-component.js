@@ -200,8 +200,9 @@ button {
 class MeditationCornerComponent extends HTMLElement {
     content = null;
     constructor() {
+        super()
         let shadow = this.attachShadow({ mode: 'open' });
-        this.content = this.createElement('div');
+        this.content = document.createElement('div');
         /*The html*/
         /*First the detector, then the buttons, then the inhale exhale button and then the audio*/
         this.content.innerHTML = `<div id="detector" onmouseover="detect()">
@@ -219,34 +220,34 @@ class MeditationCornerComponent extends HTMLElement {
 </audio>
 <audio src="music/mountain.mp3" id="audio_mountains" loop>
 </audio>`;
-        let style = this.createElement('style');
+        let style = document.createElement('style');
         style.innerHTML = meditationCornerComponentStyle;
         this.content.appendChild(style);
         shadow.appendChild(this.content);
     }
-    connectedCallback() {
+    connectedCallbawck() {
         /*What happens when you press the blue prange (sets background, makes buttons dissaper, starts the detector and starts the music)*/
         function mood_rainy() {
-            this.getElementById("mood_rainy").style.transitionDuration = "1s";
-            this.getElementById("mood_rainy").style.top = "-100px";
-            this.getElementById("mood_fresh").style.transitionDuration = "1s";
-            this.getElementById("mood_fresh").style.top = "-100px";
-            this.getElementById("mood_mountains").style.transitionDuration = "1s";
-            this.getElementById("mood_mountains").style.top = "-100px";
-            this.getElementById("detector").style.display = 'block';
+            this.content.getElementById("mood_rainy").style.transitionDuration = "1s";
+            this.content.getElementById("mood_rainy").style.top = "-100px";
+            this.content.getElementById("mood_fresh").style.transitionDuration = "1s";
+            this.content.getElementById("mood_fresh").style.top = "-100px";
+            this.content.getElementById("mood_mountains").style.transitionDuration = "1s";
+            this.content.getElementById("mood_mountains").style.top = "-100px";
+            this.content.getElementById("detector").style.display = 'block';
 
-            this.body.style.backgroundImage = 'url(images/reainy.jpg)';
+            this.content.body.style.backgroundImage = 'url(images/reainy.jpg)';
 
-            this.getElementById("detector").style.display = 'block';
+            this.content.getElementById("detector").style.display = 'block';
 
-            this.getElementById("circle").style.display = 'block';
+            this.content.getElementById("circle").style.display = 'block';
 
-            this.getElementById("arrow").style.display = 'block';
+            this.content.getElementById("arrow").style.display = 'block';
             setTimeout(function() {
-                this.getElementById("arrow").style.display = 'none';
+                this.content.getElementById("arrow").style.display = 'none';
             }, 3000);
 
-            this.getElementById("audio_rainy").play();
+            this.content.getElementById("audio_rainy").play();
 
         }
         /*What happens when you press the blue prange (sets background, makes buttons dissaper, starts the detector and starts the music)*/

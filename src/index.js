@@ -4,12 +4,6 @@ import {
 import { NavBar } from './components/nav-bar/nav-bar.js';
 import { SectionBreaker } from './components/section-breaker/section-breaker.js';
 
-
-const apiData = {
-  appId: '810208fd',
-  appKey: 'd4e09ca11057c2b54c3cec4b689831ed'
-}
-
 let nav = document.getElementById('nav');
 let menu = document.getElementById('menu');
 let menuToggler = document.getElementById('menu-toggler');

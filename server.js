@@ -62,10 +62,7 @@ const getPlan = (data) => {
   });
 };
 
-app.get("/", renderHTML);
-app.get("/meditation-corner", renderHTML);
-app.get("/macro-calculator", renderHTML);
-app.get("/diet-planner", renderHTML);
+app.get("/*", renderHTML);
 app.post("/api/getPlan", (req, res) => {
   getPlan(req.body).then(result => {
     res.send(result);

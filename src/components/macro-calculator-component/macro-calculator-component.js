@@ -203,6 +203,7 @@ button {
   outline: none;
   border: none;
   justify-self: start;
+  cursor: pointer;
 }
 
 .output {

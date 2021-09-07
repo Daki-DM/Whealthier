@@ -93,7 +93,7 @@ let aboutViewStyle = `
 class AboutView extends BaseView {
   constructor() {
     super();
-    this.setTitle('Name - About');
+    this.setTitle('Whealthier - About');
   }
   async getHtml() {
     let htmlString = `
@@ -101,9 +101,9 @@ class AboutView extends BaseView {
       <h2>About</h2>
       <div class="container">
         <p>
-          <span class="product">Name</span> is a platform that can make your day
-          healthy. At <span class="product">Name</span> we offer many features
-          from a diet planner to a meditation corner. <span class="product">Name
+          <span class="product">Whealthier</span> is a platform that can make your day
+          healthy. At <span class="product">Whealthier</span> we offer many features
+          from a diet planner to a meditation corner. <span class="product">Whealthier
           </span> is made in such a way that it can be used across almost all
           devices. <span class="product">Be healthy, Be happy!</span>
         </p>

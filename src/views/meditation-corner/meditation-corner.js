@@ -7,7 +7,7 @@ let meditationCornerStyle = `
 class MeditationCornerView extends BaseView {
     constructor() {
         super();
-        this.setTitle('Name - Meditation Corner');
+        this.setTitle('Whealthier - Meditation Corner');
     }
     async getHtml() {
         let htmlString = `

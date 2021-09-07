@@ -81,7 +81,7 @@ class NavBar extends HTMLElement {
 
     let heading = document.createElement('div');
     heading.classList.add('nav-heading');
-    heading.innerText = 'Name';
+    heading.innerText = 'Whealthier';
 
     let toggler = document.createElement('button');
     toggler.classList.add('nav-menu-toggler');

@@ -7,7 +7,7 @@ class SearchBar extends HTMLElement {
     let content = document.createElement('div');
     let input = document.createElement('input');
     input.setAttribute('type', 'text');
-    input.setAttribute('placeholder', 'Name of your meal here');
+    input.setAttribute('placeholder', 'Whealthier of your meal here');
     content.appendChild(input);
     
     shadow.appendChild(content);

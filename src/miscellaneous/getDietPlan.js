@@ -1,7 +1,3 @@
-import {
-  request
-} from './request.js';
-
 const getDietPlan = (data) => {
   return fetch('/api/getPlan', {
     method: 'POST',

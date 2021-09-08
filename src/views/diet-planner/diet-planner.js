@@ -6,7 +6,7 @@ import {
 class DietPlanner extends BaseView {
   constructor() {
     super();
-    this.setTitle('Name - Diet Planner');
+    this.setTitle('Whealthier - Diet Planner');
   }
   async getHtml() {
     let htmlString = `

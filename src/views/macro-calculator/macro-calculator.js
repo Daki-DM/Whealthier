@@ -6,7 +6,7 @@ import {
 class MacroCalculator extends BaseView {
   constructor() {
     super();
-    this.setTitle('Name - Macro Calculator');
+    this.setTitle('Whealthier - Macro Calculator');
   }
   async getHtml() {
     let htmlString = `

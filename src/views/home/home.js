@@ -90,7 +90,7 @@ let homeViewStyle = `
 class HomeView extends BaseView {
   constructor() {
     super();
-    this.setTitle('Name - Home');
+    this.setTitle('Whealthier - Home');
   }
   
   async getHtml() {

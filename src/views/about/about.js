@@ -125,9 +125,9 @@ class AboutView extends BaseView {
           <img src="https://github.com/daki-DM.png"/>
           <h3>Daki</h3>
           <p>
-            I'm a 14 year-old student and a frontend web developer. I am very
-            passionate on programming. I usually use HTML/CSS/Javascript and
-            Python everytime.
+            I'm a 14 year-old from Slovenia. And I am a frontend web developer.
+            I am very passionate on programming and I usually use HTML/CSS/Javascript
+            and Python everytime.
           </p>
         </div>
       </div>

@@ -107,7 +107,7 @@ class HomeView extends BaseView {
       </div>
       <section-break></section-break>
       
-      <div class="feature-section">
+      <div class="feature-section" id="features">
         <div class="feature-card">
           <h2>Meditation Corner</h2>
           <p>

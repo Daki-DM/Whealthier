@@ -15,7 +15,7 @@ li a::after {
   position: absolute;
   content: '';
   height: 2px;
-  background-color: green;
+  background-color: rgba(81, 88, 185, 1.0);
   left: 0;
   bottom: -2px;
   width: 0;

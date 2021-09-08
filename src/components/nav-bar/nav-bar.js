@@ -2,8 +2,8 @@ import { NavListElement } from './nav-list-element.js';
 
 let navListArray = [
   { href: '/', name: 'home' },
-  { href: '/about', name: 'about' },
-  { href: '/contact-us', name: 'contact us' }
+  { href: '/#features', name: 'features'},
+  { href: '/about', name: 'about' }
 ];
 
 let navBarStyle = document.createElement('style');
@@ -97,6 +97,9 @@ class NavBar extends HTMLElement {
       let li = document.createElement('nav-list-element');
       li.setAttribute('href', navListArray[i].href);
       li.setAttribute('name', navListArray[i].name);
+      li.addEventListener('click', () => {
+        navList.classList.remove('active');
+      });
       navList.appendChild(li);
     }
 
@@ -110,8 +113,13 @@ class NavBar extends HTMLElement {
         container.classList.remove('chip-off');
       }
     });
+    
+    document.addEventListener('click', () => {
+      navList.classList.remove('active');
+    });
 
-    toggler.onclick = () => {
+    toggler.onclick = (ev) => {
+      ev.stopPropagation();
       navList.classList.toggle('active');
     }
 

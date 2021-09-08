@@ -1,26 +1,26 @@
 # Whealthier
 
-**Whealthier** is a program whitch creates a meal plan for you, calculates how much you need to eat and is you place for meditation on your pc. It was made with JS, CSS and HTML.
+**Whealthier** is your place for health. If you want a diet plan or if you want to rest and meditate or if u wanna know your body macros, everything is there on **Whealthier**.
 
-## Setup
-Just click the link and try it out: https://whealthier.herokuapp.com/
+## Usage
+Just click the [here](https://whealthier.herokuapp.com) and try it out.
 
 ## Features
 
 ### Macro-calculator
-Calculates how many carbs, proteins and fat you need each day.
+Knowing your macros is very important if you follow a regular health routine. And we also provide a macro calculator for that. Along with the body macros it also shows other information like Body Fat Percentage, Daily Calorie Intake, etc...
 
 ### Meal planer
-Creates a meal plan for you and your needs.
+Eating healthy food is one of the best ways you can maintain your health. At **Whealthier**, we provide a meal planner which generates a personalized meal plan according to your health and food preferences.
 
 ### Meditation corner
-In meditation corner you can take a rest. Select what mood you want - rainy, fresh, mountains and start meditationg.
+Along with physical health maintaining mental health is necessary for a healthy life. At **Whealthier**, we provide a meditation corner. Immerse your mind into complete relaxation with assisted breathing and ambient background music.
 
 ## Contributors
 
-### Coding-With-3DV
+### Coding With 3DV
 I'm a 14 year-old high school student and a full-stack web developer. Coding is one my favourite field of interest. I usually use C/C++ and Typescript/Javascript everytime.
 
 ### Daki
-I'm 14 years a+old and I'm from Slovenia. I like coding and i use JavaScript, CSS, HTML and Python.
+I'm 14 years old and I'm from Slovenia. I like coding and i use JavaScript, CSS, HTML and Python.
 

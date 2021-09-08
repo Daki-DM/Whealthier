@@ -1,14 +1,44 @@
 let audioPlayingIndex = 0;
 let audioSource = [
-  new Audio('https://cdn.pixabay.com/download/audio/2021/04/03/audio_fa6288c939.mp3?filename=warm-ocean-waves-chill-out-music-3683.mp3'),
-  new Audio('https://cdn.pixabay.com/download/audio/2021/08/08/audio_88447e769f.mp3?filename=melody-of-nature-main-6672.mp3'),
-  new Audio('https://cdn.pixabay.com/download/audio/2021/08/27/audio_6013a54b35.mp3?filename=cinematic-ambient-feeling-ambient-piano-music-for-videos-7767.mp3')
+  {
+    link: 'https://cdn.pixabay.com/download/audio/2021/04/03/audio_fa6288c939.mp3?filename=warm-ocean-waves-chill-out-music-3683.mp3',
+    obj: null
+  },
+  {
+    link: 'https://cdn.pixabay.com/download/audio/2021/08/27/audio_6013a54b35.mp3?filename=cinematic-ambient-feeling-ambient-piano-music-for-videos-7767.mp3',
+    obj: null
+  },
+  {
+    link: 'https://cdn.pixabay.com/download/audio/2021/08/08/audio_88447e769f.mp3?filename=melody-of-nature-main-6672.mp3',
+    obj: null
+  }
+];
+
+let moodsAndBg = [
+  {
+    theme: 'ocean',
+    bg: 'https://ik.imagekit.io/pzrj7oa3hsd/timathon-health/original_PbKdW1IY3.gif?updatedAt=1631091715527',
+    icon: 'https://cdn-icons-png.flaticon.com/512/616/616877.png'
+  },
+  {
+    theme: 'mountain',
+    bg: 'https://ik.imagekit.io/pzrj7oa3hsd/timathon-health/QZhN_M0_GeKiikI.gif?updatedAt=1631091702362',
+    icon: 'https://cdn-icons-png.flaticon.com/512/105/105527.png'
+  },
+  {
+    theme: 'nature',
+    bg: 'https://ik.imagekit.io/pzrj7oa3hsd/timathon-health/eaae197127169573df345cef728ddaf3_YX7MO4bSic.gif?updatedAt=1631091725283',
+    icon: 'https://cdn-icons-png.flaticon.com/512/905/905036.png'
+  }
 ];
 
 let mediationCornerStyle = `
 .meditation-corner {
   height: 100vh;
-  background-color: rgba(81, 88, 185, 1.0);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 
 .circle {
@@ -27,7 +57,7 @@ let mediationCornerStyle = `
   color: #F2F2F2;
 }
 
-.circle:hover {
+.circle.breathing {
   animation-name: breathing-circle;
   animation-duration: 11s;
   animation-iteration-count: infinite;
@@ -39,7 +69,7 @@ let mediationCornerStyle = `
   user-select: none;
 }
 
-.circle:hover p {
+.circle.breathing p {
   display: block;
 }
 
@@ -63,14 +93,14 @@ p {
   }
 }
 
-.circle:hover .inhale {
+.circle.breathing .inhale {
   animation-name: inhale;
   animation-duration: 11s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
-.circle:hover .exhale {
+.circle.breathing .exhale {
   animation-name: exhale;
   animation-duration: 11s;
   animation-iteration-count: infinite;
@@ -106,16 +136,60 @@ p {
     opacity: 0;
   }
 }
+
+.popup-button {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  outline: none;
+  border: none;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  z-index: 20;
+}
+
+.mood-button-container {
+  position: absolute;
+  top: -4.5rem;
+  display: flex;
+  flex-direction: row;
+  left: 50%;
+  transform: translate(-50%, 0) scale(0) translateY(-4.5rem);
+  background-color: #F2F2F2;
+  box-shadow: rgba(81, 88, 185, 1.0);
+  border-radius: 30px;
+  justify-content: space-around;
+  transition: all 0.3s ease;
+}
+
+.mood-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 5px 5px;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: #F2F2F2;
+  box-shadow: 0 0 5px 0 rgba(81, 88, 185, 1.0);
+  transition: all 0.3s ease;
+}
+
+.mood-button-container.active {
+  transform: translate(-50%, 0) scale(1) translateY(0);
+}
 `;
 
 class MeditationCornerComponent extends HTMLElement {
+  content = null;
   constructor() {
     super();
     let shadow = this.attachShadow({ mode: 'open' });
     
-    let content = document.createElement('div');
-    content.classList.add('meditation-corner');
-    
+    this.content = document.createElement('div');
+    this.content.classList.add('meditation-corner');
+    this.setBG(moodsAndBg[0].bg);
+
     let inhaleExhaleCircle = document.createElement('div');
     inhaleExhaleCircle.classList.add('circle');
     
@@ -131,30 +205,73 @@ class MeditationCornerComponent extends HTMLElement {
     
     inhaleExhaleCircle.append(inhaleText, exhaleText);
     
-    audioSource.forEach(source => {
+    audioSource.forEach(v => {
+      let source = new Audio(v.link);
+      v.obj = source;
       source.addEventListener('ended', this.playNextMusic);
     });
     
-    content.appendChild(inhaleExhaleCircle);
+    let popupButton = document.createElement('button');
+    popupButton.classList.add('popup-button');
+    popupButton.innerText = '\u2771';
+    
+    let moodImgBtnContainer = document.createElement('div');
+    moodImgBtnContainer.classList.add('mood-button-container');
+    moodsAndBg.forEach((moodAndBg, i) => {
+      let moodImgBtn = document.createElement('img');
+      moodImgBtn.classList.add('mood-button');
+      moodImgBtn.setAttribute('bgUrl', moodAndBg.bg);
+      moodImgBtn.setAttribute('index', i);
+      moodImgBtn.src = moodAndBg.icon;
+      moodImgBtn.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        this.setBG(ev.target.getAttribute('bgUrl'));
+        audioPlayingIndex = ev.target.getAttribute('index');
+      });
+      moodImgBtnContainer.appendChild(moodImgBtn);
+    });
+    
+    popupButton.addEventListener('mouseover', (ev) => {
+      ev.preventDefault();
+      moodImgBtnContainer.classList.add('active');
+    });
+    
+    popupButton.addEventListener('mouseout', (ev) => {
+      ev.preventDefault();
+      moodImgBtnContainer.classList.remove('active');
+    });
+    
+    this.content.appendChild(inhaleExhaleCircle);
+    popupButton.appendChild(moodImgBtnContainer);
+    this.content.appendChild(popupButton);
     
     let style = document.createElement('style');
     style.innerHTML = mediationCornerStyle;
-    content.appendChild(style);
+    this.content.appendChild(style);
     
-    shadow.appendChild(content);
+    shadow.appendChild(this.content);
   }
-  startOrResumeAudio() {
-    audioSource[audioPlayingIndex].play();
+  startOrResumeAudio(ev) {
+    ev.target.classList.add('breathing');
+    audioSource[audioPlayingIndex].obj.play();
   }
-  pauseAudio() {
-    audioSource[audioPlayingIndex].pause();
+  pauseAudio(ev) {
+    ev.target.classList.remove('breathing');
+    audioSource[audioPlayingIndex].obj.pause();
   }
   playNextMusic() {
     audioPlayingIndex += 1;
     if(audioPlayingIndex === audioSource.length) {
       audioPlayingIndex = 0;
     }
-    audioSource[audioPlayingIndex].play();
+    audioSource[audioPlayingIndex].obj.play();
+  }
+  setBG(bgUrl) {
+    this.content.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(" + bgUrl + ")";
+  }
+  disconnectedCallback() {
+    audioSource[audioPlayingIndex].obj.pause();
+    audioSource[audioPlayingIndex].obj.currentTime = 0; 
   }
 };
 

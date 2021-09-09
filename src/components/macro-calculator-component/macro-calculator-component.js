@@ -1,12 +1,12 @@
 import { Person, roundTo2DecimalPlaces } from '../../miscellaneous/person.js'
 
 let inputsRequired = [
-  { name: 'Age', id: 'age', elem: null },
-  { name: 'Height', id: 'height', elem: null},
-  { name: 'Weight', id: 'weight', elem: null},
-  { name: 'Neck Circumference', id: 'n-c', elem: null},
-  { name: 'Waist Circumference', id: 'w-c', elem: null},
-  { name: 'Hip Circumference', id: 'h-c', elem: null},
+  { name: 'Age', id: 'age', elem: null, label: null },
+  { name: 'Height', id: 'height', elem: null, label: null },
+  { name: 'Weight', id: 'weight', elem: null, label: null },
+  { name: 'Neck Circumference', id: 'n-c', elem: null, label: null },
+  { name: 'Waist Circumference', id: 'w-c', elem: null, label: null },
+  { name: 'Hip Circumference', id: 'h-c', elem: null, label: null },
 ];
 
 let activityLevel = [
@@ -47,6 +47,33 @@ let macroImageLinks = [
   { link: 'https://img.icons8.com/ios/100/000000/cake.png' },
   { link: 'https://img.icons8.com/ios/90/000000/fish.png' },
   { link: 'https://img.icons8.com/ios/100/000000/corn.png' }
+];
+
+let placeHolderTexts = [
+  {
+    metric: '',
+    imperial: ''
+  },
+  {
+    metric: ' in cm',
+    imperial: ' in feet'
+  },
+  {
+    metric: ' in kg',
+    imperial: ' in lbs'
+  },
+  {
+    metric: ' in cm',
+    imperial: ' in inch'
+  },
+  {
+    metric: ' in cm',
+    imperial: ' in inch'
+  },
+  {
+    metric: ' in cm',
+    imperial: ' in inch'
+  }
 ];
 
 let macroCalculatorStyle = `
@@ -172,6 +199,8 @@ input[type=radio] {
   border: 2px solid rgba(81, 88, 185, 1.0);
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
   margin-right: 10px;
   border-radius: 10px;
 }
@@ -256,6 +285,30 @@ button {
   display: inline-block;
 }
 
+.unit-radio-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  justify-self: start;
+  grid-column: 1/-1;
+}
+
+.unit-radio-container label {
+  border-radius: 10px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.unit-radio-container .radio input[type=radio] {
+  display: none;
+}
+
+.unit-radio-container .radio input[type=radio]:checked + label{
+  background-color: rgba(81, 88, 185, 1.0);
+  color: #F2F2F2;
+}
+
 @media (max-width: 768px) {
   .macro-calculator {
     padding-top: 5rem;
@@ -284,6 +337,7 @@ class MacroCalculatorComponent extends HTMLElement {
   gender = 'male';
   activityLevelDetails = 'sedentary';
   workoutGoalChoosen = 'loss';
+  unit = 0; // metric = 0, imperial = 1
   result = document.createElement('div');
   constructor() {
     super();
@@ -306,6 +360,51 @@ class MacroCalculatorComponent extends HTMLElement {
 
     this.personDetails = document.createElement('div');
     this.personDetails.classList.add('person-details');
+    
+    let unitContainer = document.createElement('div');
+    
+    let unitHeading = document.createElement('p');
+    unitHeading.innerText = 'Unit';
+    unitHeading.classList.add('heading');
+    
+    unitContainer.appendChild(unitHeading);
+    
+    let unitRadioContainer = document.createElement('div');
+    unitRadioContainer.classList.add('unit-radio-container');
+    
+    for(let i = 0; i < 2; i++) {
+      let radioDiv = document.createElement('div');
+      radioDiv.classList.add('radio');
+      
+      let radio = document.createElement('input');
+      radio.setAttribute('type', 'radio');
+      radio.setAttribute('name', 'unit');
+      
+      if(i === 0) {
+        radio.setAttribute('id', 'metric');
+        radio.setAttribute('valud', 'metric');
+        radio.setAttribute('checked', true);
+      } else if(i === 1) {
+        radio.setAttribute('id', 'imperial');
+        radio.setAttribute('valud', 'imperial');
+      }
+      
+      radio.addEventListener('click', () => {
+        this.changeUnits();
+      });
+      
+      let radioLabel = document.createElement('label');
+      radioLabel.setAttribute('for', (i === 0 ? 'metric' : 'imperial'));
+      radioLabel.innerHTML = (i === 0 ? 'Metric' : 'Imperial');
+      
+      radioDiv.append(radio, radioLabel);
+      
+      unitRadioContainer.appendChild(radioDiv);
+    }
+    
+    unitContainer.appendChild(unitRadioContainer);
+    
+    this.personDetails.appendChild(unitContainer);
 
     let genderDetails = document.createElement('div');
     genderDetails.classList.add('gender-details');
@@ -359,23 +458,24 @@ class MacroCalculatorComponent extends HTMLElement {
 
     this.personDetails.appendChild(genderDetails);
 
-    inputsRequired.forEach((obj) => {
+    inputsRequired.forEach((obj, i) => {
       let container = document.createElement('div');
       container.classList.add('input-container');
 
       let label = document.createElement('label');
       label.setAttribute('for', obj.id);
-      label.innerHTML = obj.name;
+      label.innerHTML = (obj.name + placeHolderTexts[i][this.unit === 0 ? 'metric' : 'imperial'])
 
       let input = document.createElement('input');
       input.setAttribute('id', obj.id);
       input.setAttribute('name', obj.id);
       input.setAttribute('type', 'number');
       input.setAttribute('required', true);
-      input.setAttribute('step', 0.1);
+      input.setAttribute('step', 0.001);
       input.classList.add('text-input');
       
       obj.elem = input;
+      obj.label = label;
 
       container.appendChild(label);
       container.appendChild(input);
@@ -493,6 +593,13 @@ class MacroCalculatorComponent extends HTMLElement {
     shadow.appendChild(style);
     shadow.appendChild(content);
   }
+  changeUnits() {
+    if(this.unit === 0) this.unit = 1;
+    else if(this.unit === 1) this.unit = 0;
+    inputsRequired.forEach((input, i) => {
+      input.label.innerHTML = (input.name + placeHolderTexts[i][this.unit === 0 ? 'metric' : 'imperial'])
+    });
+  }
   genderRadioClickListener(element) {
     if (element.getAttribute('value') === 'male') {
       this.gender = 'male';
@@ -510,12 +617,24 @@ class MacroCalculatorComponent extends HTMLElement {
     
     let person = new Person();
     
+    let feetToCMFactor = 30.48; // *
+    let poundsToKGFactor = 2.205; // /
+    let inchesToCMFactor = 2.54; // *
+    
     person.age = age;
-    person.height = height;10
+    person.height = height;
     person.weight = weight;
     person.neckCircumference = neckCircumference;
     person.waistCircumference = waistCircumference;
     person.hipCircumference = hipCircumference;
+
+    if(this.unit === 1) {
+      person.height = height * feetToCMFactor;
+      person.weight = weight / poundsToKGFactor;
+      person.neckCircumference = neckCircumference * inchesToCMFactor;
+      person.waistCircumference = waistCircumference * inchesToCMFactor;
+      person.hipCircumference = hipCircumference * inchesToCMFactor;
+    }
     
     if(this.gender === 'male') {
       person.gender = 0;

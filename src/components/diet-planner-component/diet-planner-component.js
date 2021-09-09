@@ -121,6 +121,8 @@ input[type=checkbox] {
   border: 2px solid rgba(81, 88, 185, 1.0);
   background-color: transparent;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
   margin-right: 10px;
 }
 
@@ -141,6 +143,8 @@ input[type=radio] {
   border: 2px solid rgba(81, 88, 185, 1.0);
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
   margin-right: 10px;
   border-radius: 10px;
 }

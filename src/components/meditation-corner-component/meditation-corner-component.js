@@ -281,6 +281,7 @@ class MeditationCornerComponent extends HTMLElement {
     if(audioPlayingIndex === audioSource.length) {
       audioPlayingIndex = 0;
     }
+    this.setBG(moodsAndBg[audioPlayingIndex].bg);
     audioSource[audioPlayingIndex].obj.play();
   }
   setBG(bgUrl) {

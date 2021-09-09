@@ -202,6 +202,8 @@ class MeditationCornerComponent extends HTMLElement {
     this.content = document.createElement('div');
     this.content.classList.add('meditation-corner');
     this.setBG(moodsAndBg[0].bg);
+    
+    let context = this;
 
     let inhaleExhaleCircle = document.createElement('div');
     inhaleExhaleCircle.classList.add('circle');
@@ -221,7 +223,7 @@ class MeditationCornerComponent extends HTMLElement {
     audioSource.forEach(v => {
       let source = new Audio(v.link);
       v.obj = source;
-      source.addEventListener('ended', this.playNextMusic);
+      source.addEventListener('ended', this.playNextMusic.bind(context));
     });
     
     let popupButton = document.createElement('button');
@@ -264,6 +266,9 @@ class MeditationCornerComponent extends HTMLElement {
     
     shadow.appendChild(this.content);
   }
+  setBG(bgUrl) {
+    this.content.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(" + bgUrl + ")";
+  }
   startOrResumeAudio(ev) {
     if(audioSource[audioPlayingIndex].obj.paused) {
       ev.target.classList.add('breathing');
@@ -283,9 +288,6 @@ class MeditationCornerComponent extends HTMLElement {
     }
     this.setBG(moodsAndBg[audioPlayingIndex].bg);
     audioSource[audioPlayingIndex].obj.play();
-  }
-  setBG(bgUrl) {
-    this.content.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(" + bgUrl + ")";
   }
   disconnectedCallback() {
     audioSource[audioPlayingIndex].obj.pause();

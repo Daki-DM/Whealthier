@@ -1,14 +1,14 @@
 # Whealthier
 
-**Whealthier** is your place for health. If you want a diet plan or if you want to rest and meditate or if u wanna know your body macros, everything is there on **Whealthier**.
+**Whealthier** is a place for your health. If you want a diet plan or if you want to rest and meditate or if u wanna know your body macros, everything is there on **Whealthier**.
 
 ## Usage
-Just click the [here](https://whealthier.herokuapp.com) and try it out.
+Just click [here](https://whealthier.herokuapp.com) and try it out.
 
 ## Features
 
-### Meal planer
-Eating healthy food is one of the best ways you can maintain your health. At **Whealthier**, we provide a meal planner which generates a personalized meal plan according to your health and food preferences.
+### Diet planner
+Eating healthy food is one of the best ways you can maintain your health. At **Whealthier**, we provide a diet planner which generates a personalized diet plan according to your health and food preferences.
 
 ### Macro calculator
 Knowing your macros is very important if you follow a regular health routine. And we also provide a macro calculator for that. Along with the body macros it also shows other information like Body Fat Percentage, Daily Calorie Intake, etc...

@@ -9,7 +9,7 @@ let audioSource = [
     obj: null
   },
   {
-    link: 'https://cdn.pixabay.com/download/audio/2021/08/08/audio_88447e769f.mp3?filename=melody-of-nature-main-6672.mp3',
+    link: 'https://cdn.pixabay.com/download/audio/2021/08/18/audio_9f4da11782.mp3?filename=scandinavianz-nature-7504.mp3',
     obj: null
   }
 ];
@@ -51,7 +51,7 @@ let mediationCornerStyle = `
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid rgba( 255, 255, 255, 0.18 );
-  box-shadow: 0 8 px 32 px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   display: grid;
   place-items: center;
   color: #F2F2F2;
@@ -67,6 +67,7 @@ let mediationCornerStyle = `
 .circle p {
   display: none;
   user-select: none;
+  pointer-events: none;
 }
 
 .circle.breathing p {
@@ -164,6 +165,18 @@ p {
   transition: all 0.3s ease;
 }
 
+.mood-button-container:after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-radius: 2px;
+  border-color: #F2F2F2 transparent transparent transparent;
+}
+
 .mood-button {
   width: 2.5rem;
   height: 2.5rem;
@@ -252,12 +265,16 @@ class MeditationCornerComponent extends HTMLElement {
     shadow.appendChild(this.content);
   }
   startOrResumeAudio(ev) {
-    ev.target.classList.add('breathing');
-    audioSource[audioPlayingIndex].obj.play();
+    if(audioSource[audioPlayingIndex].obj.paused) {
+      ev.target.classList.add('breathing');
+      audioSource[audioPlayingIndex].obj.play();
+    }
   }
   pauseAudio(ev) {
-    ev.target.classList.remove('breathing');
-    audioSource[audioPlayingIndex].obj.pause();
+    if(!audioSource[audioPlayingIndex].obj.paused) {
+      ev.target.classList.remove('breathing');
+      audioSource[audioPlayingIndex].obj.pause();
+    }
   }
   playNextMusic() {
     audioPlayingIndex += 1;

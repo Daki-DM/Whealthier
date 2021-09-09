@@ -154,39 +154,30 @@ form {
 .radio {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
+  max-height: 20px;
 }
 
-input[type='radio'] {
-  visibility: hidden;
-  margin-right: 0.5rem;
-}
-
-input[type='radio']:after {
-  width: 20px;
+input[type=radio] {
   height: 20px;
-  border-radius: 20px;
-  position: relative;
+  width: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border-radius: 4px;
+  outline: none;
+  transition-duration: 0.1s;
+  border: 2px solid rgba(81, 88, 185, 1.0);
   background-color: transparent;
-  content: '';
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid rgba(81, 88, 185, 1.0);
-  box-sizing: border-box;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 10px;
 }
 
-input[type='radio']:checked:after {
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-  position: relative;
+input[type=radio]:checked {
   background-color: rgba(81, 88, 185, 1.0);
-  content: '';
-  display: inline-block;
-  visibility: visible;
-  border: 2px solid rgba(81, 88, 185, 1.0);
-  box-sizing: border-box;
 }
 
 button {
@@ -335,7 +326,7 @@ class MacroCalculatorComponent extends HTMLElement {
       let maleOrFemale = i === 0 ? 0 : 1;
 
       let radioDiv = document.createElement('div');
-      radioDiv.classList.add('.radio');
+      radioDiv.classList.add('radio');
 
       let radioInput = document.createElement('input');
       radioInput.setAttribute('type', 'radio');
@@ -409,7 +400,7 @@ class MacroCalculatorComponent extends HTMLElement {
     
     goalInputRequired.forEach((obj, index) => {
       let radioDiv = document.createElement('div');
-      radioDiv.classList.add('.radio');
+      radioDiv.classList.add('radio');
 
       let radioInput = document.createElement('input');
       radioInput.setAttribute('type', 'radio');
@@ -453,7 +444,7 @@ class MacroCalculatorComponent extends HTMLElement {
     
     activityLevelInputRequired.forEach((obj, index) => {
       let radioDiv = document.createElement('div');
-      radioDiv.classList.add('.radio');
+      radioDiv.classList.add('radio');
 
       let radioInput = document.createElement('input');
       radioInput.setAttribute('type', 'radio');

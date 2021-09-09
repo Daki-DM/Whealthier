@@ -382,15 +382,15 @@ class MacroCalculatorComponent extends HTMLElement {
       
       if(i === 0) {
         radio.setAttribute('id', 'metric');
-        radio.setAttribute('valud', 'metric');
+        radio.setAttribute('value', 'metric');
         radio.setAttribute('checked', true);
       } else if(i === 1) {
         radio.setAttribute('id', 'imperial');
-        radio.setAttribute('valud', 'imperial');
+        radio.setAttribute('value', 'imperial');
       }
       
-      radio.addEventListener('click', () => {
-        this.changeUnits();
+      radio.addEventListener('click', (ev) => {
+        this.changeUnits(ev);
       });
       
       let radioLabel = document.createElement('label');
@@ -593,9 +593,9 @@ class MacroCalculatorComponent extends HTMLElement {
     shadow.appendChild(style);
     shadow.appendChild(content);
   }
-  changeUnits() {
-    if(this.unit === 0) this.unit = 1;
-    else if(this.unit === 1) this.unit = 0;
+  changeUnits(ev) {
+    if(ev.target.getAttribute('value') === 'metric') this.unit = 0;
+    else if(ev.target.getAttribute('value') === 'imperial') this.unit = 1;
     inputsRequired.forEach((input, i) => {
       input.label.innerHTML = (input.name + placeHolderTexts[i][this.unit === 0 ? 'metric' : 'imperial'])
     });

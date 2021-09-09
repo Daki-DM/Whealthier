@@ -31,11 +31,13 @@ const generateQueryString = (data, id, key) => {
       healthLabels += `&health=${healthLabel}`;
     }
   }
+  let noOfMeals = mealTypes[data.mealCount].length;
+  let calories = data.calories / noOfMeals;
   let queries = [];
-  for (let i = 0; i < mealTypes[data.mealCount].length; i++) {
+  for (let i = 0; i < noOfMeals; i++) {
     let queryParam = mealTypes[data.mealCount][i];
-    let query = `q=${queryParam}&app_id=${id}&app_key=${key}&to=${data.planType}&diet=${data.diet}${healthLabels}&random=true`;
-    queries.push(query);
+    let query = `q=${queryParam}&app_id=${id}&app_key=${key}&diet=${data.diet}${healthLabels}&calories=${Math.round(calories)}&random=true`;
+		queries.push(query);
   }
   return queries;
 };

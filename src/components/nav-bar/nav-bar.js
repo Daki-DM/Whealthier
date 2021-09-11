@@ -103,6 +103,7 @@ class NavBar extends HTMLElement {
       navList.appendChild(li);
     }
 
+    // the stuff that handles the beautiful navbar animation
     document.addEventListener('scroll', (ev) => {
       if (
         document.body.scrollTop > 1 ||
@@ -114,10 +115,12 @@ class NavBar extends HTMLElement {
       }
     });
     
+    // close navbar when pressed somewhere else
     document.addEventListener('click', () => {
       navList.classList.remove('active');
     });
 
+    // for toggling navbar
     toggler.onclick = (ev) => {
       ev.stopPropagation();
       navList.classList.toggle('active');

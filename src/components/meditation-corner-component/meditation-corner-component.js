@@ -9,7 +9,7 @@ let audioSource = [
     obj: null
   },
   {
-    link: 'https://cdn.pixabay.com/download/audio/2021/08/08/audio_88447e769f.mp3?filename=melody-of-nature-main-6672.mp3',
+    link: 'https://cdn.pixabay.com/download/audio/2021/08/18/audio_9f4da11782.mp3?filename=scandinavianz-nature-7504.mp3',
     obj: null
   }
 ];
@@ -51,7 +51,7 @@ let mediationCornerStyle = `
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid rgba( 255, 255, 255, 0.18 );
-  box-shadow: 0 8 px 32 px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   display: grid;
   place-items: center;
   color: #F2F2F2;
@@ -67,6 +67,7 @@ let mediationCornerStyle = `
 .circle p {
   display: none;
   user-select: none;
+  pointer-events: none;
 }
 
 .circle.breathing p {
@@ -148,6 +149,15 @@ p {
   width: 3rem;
   height: 3rem;
   z-index: 20;
+  background-color: #FFF;
+}
+
+.popup-button:hover {
+  background-color: #F2F2F2;
+}
+
+.popup-button ion-icon {
+  font-size: 1.5rem;
 }
 
 .mood-button-container {
@@ -164,15 +174,32 @@ p {
   transition: all 0.3s ease;
 }
 
+.mood-button-container:after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-radius: 2px;
+  border-color: #F2F2F2 transparent transparent transparent;
+}
+
 .mood-button {
   width: 2.5rem;
   height: 2.5rem;
   margin: 5px 5px;
   border-radius: 50%;
   padding: 5px;
-  background-color: #F2F2F2;
-  box-shadow: 0 0 5px 0 rgba(81, 88, 185, 1.0);
+  background-color: #FFF;
+  box-shadow: 0 0 3px 0 rgba(81, 88, 185, 1.0);
   transition: all 0.3s ease;
+}
+
+.mood-button {
+  background-color: #F2F2F2;
+  box-shadow: 0 0 6px 0 rgba(81, 88, 185, 1.0);
 }
 
 .mood-button-container.active {
@@ -189,7 +216,10 @@ class MeditationCornerComponent extends HTMLElement {
     this.content = document.createElement('div');
     this.content.classList.add('meditation-corner');
     this.setBG(moodsAndBg[0].bg);
+    
+    let context = this;
 
+    // the circle that stays in the middle, kinda like a lung
     let inhaleExhaleCircle = document.createElement('div');
     inhaleExhaleCircle.classList.add('circle');
     
@@ -208,12 +238,13 @@ class MeditationCornerComponent extends HTMLElement {
     audioSource.forEach(v => {
       let source = new Audio(v.link);
       v.obj = source;
-      source.addEventListener('ended', this.playNextMusic);
+      source.addEventListener('ended', this.playNextMusic.bind(context));
     });
     
+    // set of buttons to change theme
     let popupButton = document.createElement('button');
     popupButton.classList.add('popup-button');
-    popupButton.innerText = '\u2771';
+    popupButton.innerHTML = '<ion-icon name="chevron-up-outline"></ion-icon>';
     
     let moodImgBtnContainer = document.createElement('div');
     moodImgBtnContainer.classList.add('mood-button-container');
@@ -251,23 +282,28 @@ class MeditationCornerComponent extends HTMLElement {
     
     shadow.appendChild(this.content);
   }
+  setBG(bgUrl) {
+    this.content.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(" + bgUrl + ")";
+  }
   startOrResumeAudio(ev) {
-    ev.target.classList.add('breathing');
-    audioSource[audioPlayingIndex].obj.play();
+    if(audioSource[audioPlayingIndex].obj.paused) {
+      ev.target.classList.add('breathing');
+      audioSource[audioPlayingIndex].obj.play();
+    }
   }
   pauseAudio(ev) {
-    ev.target.classList.remove('breathing');
-    audioSource[audioPlayingIndex].obj.pause();
+    if(!audioSource[audioPlayingIndex].obj.paused) {
+      ev.target.classList.remove('breathing');
+      audioSource[audioPlayingIndex].obj.pause();
+    }
   }
   playNextMusic() {
     audioPlayingIndex += 1;
     if(audioPlayingIndex === audioSource.length) {
       audioPlayingIndex = 0;
     }
+    this.setBG(moodsAndBg[audioPlayingIndex].bg);
     audioSource[audioPlayingIndex].obj.play();
-  }
-  setBG(bgUrl) {
-    this.content.style.backgroundImage = "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(" + bgUrl + ")";
   }
   disconnectedCallback() {
     audioSource[audioPlayingIndex].obj.pause();

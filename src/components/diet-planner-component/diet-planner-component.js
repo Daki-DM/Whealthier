@@ -79,7 +79,9 @@ select::-ms-expand {
 
 .input-label-container {
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
+  align-items: start;
   max-width: 100%;
 }
 
@@ -119,6 +121,8 @@ input[type=checkbox] {
   border: 2px solid rgba(81, 88, 185, 1.0);
   background-color: transparent;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
   margin-right: 10px;
 }
 
@@ -139,6 +143,8 @@ input[type=radio] {
   border: 2px solid rgba(81, 88, 185, 1.0);
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
   margin-right: 10px;
   border-radius: 10px;
 }
@@ -153,8 +159,41 @@ input[type=radio]:checked {
   justify-content: start;
 }
 
+input[type=number] {
+  height: 2rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  background-color: rgba(81, 88, 185, 1.0);
+  color: #F2F2F2;
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  width: 100%;
+  min-width: 100%;
+}
+
+input[type=number]:focus {
+  background-color: rgba(81, 88, 185, .8);
+}
+
+input[type=number]:hover {
+  background-color: rgba(81, 88, 185, .9);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .output {
-  width: 100;
+  width: 100%;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   background-color: #F2F2F2;
   border-radius: 10px;
@@ -162,6 +201,7 @@ input[type=radio]:checked {
   grid-template-columns: repeat(3, 1fr);
   box-sizing: border-box;
   gap: 20px;
+  margin-bottom: 10px;
 }
 
 .diet-card {
@@ -170,6 +210,7 @@ input[type=radio]:checked {
   box-shadow: 0 0 8px rgba(31, 38, 135, 0.37);
   padding: 10px;
   box-sizing: border-box;
+  max-width: 100%;
 }
 
 .diet-card h3 {
@@ -180,6 +221,7 @@ input[type=radio]:checked {
 
 .diet-card img {
   max-width: 100%;
+  min-width: 100%;
   border-radius: 10px;
 }
 
@@ -187,6 +229,39 @@ input[type=radio]:checked {
   font-family: 'Rubik', sans-serif;
   font-size: 0.95rem;
   margin: 0;
+}
+
+.diet-card ul {
+  list-style: none;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  gap: 5px;
+}
+
+.diet-card ul li {
+  position: relative;
+  padding-left: calc(0.95rem + 5px);
+}
+
+.diet-card ul li:before {
+  content: '';
+  height: 0.95rem;
+  width: 0.95rem;
+  background-color: rgba(81, 88, 185, 1.0);
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  inset: 0;
+}
+
+.diet-card .list-label {
+  margin-top: 10px;
+  font-family: 'Poppins', sans-serif;
 }
 
 button {
@@ -206,6 +281,12 @@ button {
   cursor: pointer;
 }
 
+loader-component {
+  grid-column: 1/-1;
+  justify-self: center;
+  padding: 20px;
+}
+
 @media (max-width: 768px) {
   .diet-planner {
     padding-top: 5rem;
@@ -215,15 +296,22 @@ button {
   form {
     grid-template-columns: 1fr;
   }
+  input[type=number] {
+    max-width: calc(100% - 20px) !important;
+    min-width: auto;
+  }
   .output {
     grid-template-columns: 1fr;
+  }
+  loader-component {
+    padding: 10px;
   }
 }
 `;
 
 class DietPlannerComponent extends HTMLElement {
   mealCount = 'three';
-  dietPlan = '1';
+  calories = 1800;
   healthLabels = new Set();
   dietPreference = 'balanced';
   output = document.createElement('div');
@@ -246,6 +334,7 @@ class DietPlannerComponent extends HTMLElement {
     // form
     let form = document.createElement('form');
     
+    // no of meals a user/person eats a day
     let noOfMealsContainer = document.createElement('div');
     noOfMealsContainer.classList.add('input-label-container');
     let noOfMealsSpinner = document.createElement('select');
@@ -261,6 +350,7 @@ class DietPlannerComponent extends HTMLElement {
       option.innerText = plan.name;
       noOfMealsSpinner.appendChild(option);
     });
+    // set mealCount when value changes
     noOfMealsSpinner.addEventListener('change', (ev) => {
       ev.preventDefault();
       this.mealCount = noOfMealsSpinner.options[noOfMealsSpinner.selectedIndex].value;
@@ -270,29 +360,26 @@ class DietPlannerComponent extends HTMLElement {
     noOfMealsLabel.setAttribute('for', 'no-meal-select');
     noOfMealsContainer.append(noOfMealsLabel, noOfMealsSpinner);
     
-
-    let dietPlanSpinnerContainer = document.createElement('div');
-    dietPlanSpinnerContainer.classList.add('input-label-container');
-    let dietPlanSpinner = document.createElement('select');
-    dietPlanSpinner.setAttribute('name', 'diet-planner-spinner')
-    dietPlanSpinner.setAttribute('id', 'diet-plan-select');
-    dietPlanData.forEach(plan => {
-      let option = document.createElement('option');
-      option.setAttribute('value', plan.value);
-      option.innerText = plan.name;
-      dietPlanSpinner.appendChild(option);
-    });
-    dietPlanSpinner.selectedIndex = '1';
-    dietPlanSpinner.addEventListener('change', (ev) => {
+    // input for how many calories a person eats a day
+    let calorieInputContainer = document.createElement('div');
+    calorieInputContainer.classList.add('input-label-container');
+    let calorieInput = document.createElement('input');
+    calorieInput.setAttribute('name', 'calorie-input')
+    calorieInput.setAttribute('id', 'calorie-input');
+    calorieInput.setAttribute('type', 'number');
+    calorieInput.setAttribute('required', true);
+    calorieInput.setAttribute('step', '1');
+    calorieInput.setAttribute('value', 1900);
+    calorieInput.addEventListener('change', (ev) => {
       ev.preventDefault();
-      this.dietPlan = dietPlanSpinner.options[dietPlanSpinner.selectedIndex].value;
+      this.calories = parseInt(calorieInput.value);
     });
-    let dietPlanLabel = document.createElement('label');
-    dietPlanLabel.innerHTML = 'Diet Plan';
-    dietPlanLabel.setAttribute('for', 'diet-plan-select');
-    dietPlanSpinnerContainer.append(dietPlanLabel, dietPlanSpinner);
+    let calorieLabel = document.createElement('label');
+    calorieLabel.innerHTML = 'Calories (Recommended: 1700 - 2400)';
+    calorieLabel.setAttribute('for', 'calorie-input');
+    calorieInputContainer.append(calorieLabel, calorieInput);
     
-    
+    // options for user's health preferences
     let healthLabelContainer = document.createElement('div');
     healthLabelContainer.classList.add('input-label-container');
     let healthLabelCheckBoxContainer = document.createElement('div');
@@ -327,6 +414,7 @@ class DietPlannerComponent extends HTMLElement {
     healthLabelLabel.innerHTML = 'Health Label';
     healthLabelContainer.append(healthLabelLabel, healthLabelCheckBoxContainer);
     
+    // options for user's diet preferences
     let dietLabelContainer = document.createElement('div');
     dietLabelContainer.classList.add('input-label-container');
     let dietLabelRadioContainer = document.createElement('div');
@@ -360,19 +448,21 @@ class DietPlannerComponent extends HTMLElement {
     button.setAttribute('type', 'submit');
     button.innerText = 'Get Plan';
 
+    // append all inputs to a form
     form.append(
       noOfMealsContainer,
-      dietPlanSpinnerContainer,
+      calorieInputContainer,
       healthLabelContainer,
       dietLabelContainer,
       button
     );
     
+    // render loader before showing output, also calls function to show it
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+      this.output.innerHTML = '';
+      this.output.appendChild(document.createElement('loader-component'));
       this.calculate();
-      this.output.style.padding = '20px';
-      this.output.style.marginBottom = '20px';
       window.scrollTo({top: 0, behavior: 'smooth'});
     });
     
@@ -385,9 +475,10 @@ class DietPlannerComponent extends HTMLElement {
     shadow.appendChild(content);
   }
   calculate() {
+    // fetch data from backend
     getDietPlan(
       {
-        planType: this.dietPlan.toString(),
+        calories: this.calories,
         mealCount: this.mealCount,
         healthPreferences: Array.from(this.healthLabels),
         diet: this.dietPreference
@@ -405,6 +496,7 @@ class DietPlannerComponent extends HTMLElement {
   }
   renderOutput(recipes) {
     this.output.innerHTML = '';
+    // go through all recipes and render a diet card
     recipes.forEach(recipe => {
       let label = recipe.label;
       let calories = recipe.calories;
@@ -413,6 +505,7 @@ class DietPlannerComponent extends HTMLElement {
       let mealTypes = recipe.mealType;
       let cuisineTypes = recipe.cuisineType;
       let dishTypes = recipe.dishType;
+      let ingredients = recipe.ingredientLines;
       
       let dietCard = document.createElement('div');
       dietCard.classList.add('diet-card');
@@ -435,16 +528,35 @@ class DietPlannerComponent extends HTMLElement {
       let recipeDishType = document.createElement('p');
       recipeDishType.innerText = `Dish Type: ${(dishTypes && dishTypes.length) > 0 ? dishTypes.slice(0, 3).join(', ') : 'Unknown'}`;
       
+      let ingredientListLabel = document.createElement('p');
+      ingredientListLabel.classList.add('list-label');
+      ingredientListLabel.innerText = 'Ingredients';
+      let ingredientList = document.createElement('ul');
+      ingredients?.forEach(v => {
+        let li = document.createElement('li');
+        li.innerText = v.toString();
+        ingredientList.appendChild(li);
+      });
+      if(!ingredients) {
+        let li = document.createElement('li');
+        li.innerText = 'Unknown';
+        ingredientList.appendChild(li);
+      }
+      
       dietCard.append(
         recipeImage,
         recipeName,
         recipeCal,
         recipeMealType,
         recipeCuisineType,
-        recipeDishType
+        recipeDishType,
+        ingredientListLabel,
+        ingredientList
       );
 
       this.output.appendChild(dietCard);
+      this.output.style.padding = '20px';
+      this.output.style.marginBottom = '20px';
     });
   }
 }

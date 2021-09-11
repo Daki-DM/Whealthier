@@ -151,12 +151,14 @@ class DiseaseInfoComponent extends HTMLElement {
 
     content.appendChild(heading);
     
+    // actual form
     let inputContainer = document.createElement('form');
     inputContainer.classList.add('input-container');
     inputContainer.setAttribute('action', '');
     inputContainer.setAttribute('method', 'get');
     inputContainer.setAttribute('id', 'disease-query');
     
+    // input for query on a disease
     let input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'Disease Name');
@@ -168,6 +170,7 @@ class DiseaseInfoComponent extends HTMLElement {
     
     this.loader.setAttribute('id', 'loader');
     
+    // handle submit event
     inputContainer.addEventListener('submit', (ev) => {
       ev.preventDefault();
       this.outputContainer.innerHTML = '';
@@ -193,6 +196,7 @@ class DiseaseInfoComponent extends HTMLElement {
     shadow.appendChild(content);
   }
   getDiseaseInfo(queryStr) {
+    // fetches data from the backend regarding the query
     fetch(
       '/api/getDiseaseInfo',
       {
@@ -216,6 +220,7 @@ class DiseaseInfoComponent extends HTMLElement {
     });
   }
   renderOutput(result) {
+    // render the data from api to the browser window
     this.outputContainer.removeChild(this.loader);
     this.outputContainer.appendChild(this.output);
     this.output.innerHTML = result['_'];

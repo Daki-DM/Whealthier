@@ -1,3 +1,4 @@
+// class for every route
 class Route {
   name = '';
   view = null;

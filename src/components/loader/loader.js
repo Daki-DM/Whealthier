@@ -20,6 +20,7 @@ class Loader extends HTMLElement {
     
     let shadow = this.attachShadow({mode: 'open'});
     
+    // shows loading animation until the content gets loaded
     let content = document.createElement('div');
     content.classList.add('loader-container');
     

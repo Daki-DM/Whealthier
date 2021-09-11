@@ -205,6 +205,7 @@ class MeditationCornerComponent extends HTMLElement {
     
     let context = this;
 
+    // the circle that stays in the middle, kinda like a lung
     let inhaleExhaleCircle = document.createElement('div');
     inhaleExhaleCircle.classList.add('circle');
     
@@ -226,6 +227,7 @@ class MeditationCornerComponent extends HTMLElement {
       source.addEventListener('ended', this.playNextMusic.bind(context));
     });
     
+    // set of buttons to change theme
     let popupButton = document.createElement('button');
     popupButton.classList.add('popup-button');
     popupButton.innerText = '\u2771';

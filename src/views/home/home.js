@@ -31,15 +31,15 @@ let homeViewStyle = `
 }
 
 .feature-section {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
 }
 
 .feature-section .feature-card {
   width: 100%;
   background-color: #F2F2F2;
   border-radius: 10px;
-  margin-bottom: 10px;
   padding: 30px;
   box-sizing: border-box;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -83,6 +83,15 @@ let homeViewStyle = `
   }
   .landing-section .hero-img {
     max-width: 100%;
+  }
+  .feature-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 920px) {
+  .feature-section {
+    grid-template-columns: 1fr;
   }
 }
 `;

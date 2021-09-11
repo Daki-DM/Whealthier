@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const axios = require('axios');
+const parseXML = require('xml2js').parseString;
 
 const app = express();
 
@@ -69,6 +70,30 @@ app.post("/api/getPlan", (req, res) => {
   getPlan(req.body).then(result => {
     res.send(result);
   });
+});
+app.post("/api/getDiseaseInfo", (req, response) => {
+  axios.get(`https://wsearch.nlm.nih.gov/ws/query?db=healthTopics&term=title:${req.body.query}`)
+    .then(res => {
+      parseXML(res.data, (err, _res) => {
+        if(
+          (_res.nlmSearchResult.list) &&
+          (_res.nlmSearchResult.list[0]) &&
+          (_res.nlmSearchResult.list[0].document) &&
+          (_res.nlmSearchResult.list[0].document[0]) &&
+          (_res.nlmSearchResult.list[0].document[0].content)
+        ) {
+          _res.nlmSearchResult.list[0].document[0].content.forEach(v => {
+            if(v['$'].name === 'FullSummary') {
+              response.send(v);
+            }
+          });
+        } else {
+          response.status(404);
+          response.send({ reply: 'Unable to get information on the given query :/' });
+        }
+      });
+    })
+    .catch(err => console.error(err));
 });
 
 app.listen(process.env.PORT || 3000, () => console.log("Server running..."));

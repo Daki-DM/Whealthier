@@ -4,13 +4,15 @@ import { MeditationCornerView } from '../views/meditation-corner/meditation-corn
 import { AboutView } from '../views/about/about.js';
 import { MacroCalculator } from '../views/macro-calculator/macro-calculator.js';
 import { DietPlanner } from '../views/diet-planner/diet-planner.js'
+import { DiseaseInfo } from '../views/disease-info/disease-info.js';
 
 let routes = [
   new Route('/', HomeView),
   new Route('/meditation-corner', MeditationCornerView),
   new Route('/about', AboutView),
   new Route('/macro-calculator', MacroCalculator),
-  new Route('/diet-planner', DietPlanner)
+  new Route('/diet-planner', DietPlanner),
+  new Route('/disease-info', DiseaseInfo)
 ]
 
 class Router {

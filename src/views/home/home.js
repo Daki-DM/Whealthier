@@ -109,6 +109,15 @@ class HomeView extends BaseView {
       
       <div class="feature-section" id="features">
         <div class="feature-card">
+          <h2>Diet Planner</h2>
+          <p>
+            Diet Planner can provide a personalised diet plan according to your
+            preferences. Just provide how many meals you eat a day and your
+            health preferences. And you will get your custom diet plan.
+          </p>
+          <a href="/diet-planner" spa-page-link="true">Go there</a>
+        </div> 
+        <div class="feature-card">
           <h2>Meditation Corner</h2>
           <p>
             Meditation is a consciousness-changing technique that has been
@@ -126,13 +135,12 @@ class HomeView extends BaseView {
           <a href="/macro-calculator" spa-page-link="true">Go there</a>
         </div>
         <div class="feature-card">
-          <h2>Diet Planner</h2>
+          <h2>Disease Info</h2>
           <p>
-            Diet Planner can provide a personalised diet plan according to your
-            preferences. Just provide how many meals you eat a day and your
-            health preferences. And you will get your custom diet plan.
+            Disease Info is a nice feature which provides a detailed summary of
+            a disease. Type in the disease name and it will give you the information on that
           </p>
-          <a href="/diet-planner" spa-page-link="true">Go there</a>
+          <a href="/disease-info" spa-page-link="true">Go there</a>
         </div>
       </div>
 

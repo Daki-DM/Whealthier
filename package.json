@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm i express axios && node server.js",
+    "start": "npm i express axios xml2js && node server.js",
     "install-deps": "npm i --no-bin-links",
     "build-dev": "node ./node_modules/rollup/dist/bin/rollup -cw",
     "serve": "serve"
@@ -22,10 +22,11 @@
   },
   "homepage": "https://github.com/daki-dm/pharmacy-health-project#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "rollup": "^2.56.2",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "axios": "^0.21.4",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "rollup": "^2.56.2",
+    "xml2js": "^0.4.23"
   }
 }

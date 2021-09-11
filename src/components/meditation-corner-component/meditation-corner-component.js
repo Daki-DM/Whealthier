@@ -149,6 +149,15 @@ p {
   width: 3rem;
   height: 3rem;
   z-index: 20;
+  background-color: #FFF;
+}
+
+.popup-button:hover {
+  background-color: #F2F2F2;
+}
+
+.popup-button ion-icon {
+  font-size: 1.5rem;
 }
 
 .mood-button-container {
@@ -183,9 +192,14 @@ p {
   margin: 5px 5px;
   border-radius: 50%;
   padding: 5px;
-  background-color: #F2F2F2;
-  box-shadow: 0 0 5px 0 rgba(81, 88, 185, 1.0);
+  background-color: #FFF;
+  box-shadow: 0 0 3px 0 rgba(81, 88, 185, 1.0);
   transition: all 0.3s ease;
+}
+
+.mood-button {
+  background-color: #F2F2F2;
+  box-shadow: 0 0 6px 0 rgba(81, 88, 185, 1.0);
 }
 
 .mood-button-container.active {
@@ -230,7 +244,7 @@ class MeditationCornerComponent extends HTMLElement {
     // set of buttons to change theme
     let popupButton = document.createElement('button');
     popupButton.classList.add('popup-button');
-    popupButton.innerText = '\u2771';
+    popupButton.innerHTML = '<ion-icon name="chevron-up-outline"></ion-icon>';
     
     let moodImgBtnContainer = document.createElement('div');
     moodImgBtnContainer.classList.add('mood-button-container');

@@ -6,6 +6,7 @@ const parseXML = require('xml2js').parseString;
 
 const app = express();
 
+// different mealType for different number of meals
 const mealTypes = {
   'three': ['Breakfast', 'Lunch', 'Dinner'],
   'four': ['Breakfast', 'Lunch', 'Tea', 'Dinner'],
@@ -25,6 +26,14 @@ const renderHTML = (req, res) => {
   res.sendFile(path.resolve(__dirname, "index.html"));
 };
 
+/*
+ * What: Generates a query string
+ * Why: for api request
+ * @param data: object
+ * @param id: string
+ * @param key: string
+ * @return queries: Array<string>
+ **/
 const generateQueryString = (data, id, key) => {
   let healthLabels = '';
   if (data.healthPreferences) {
@@ -43,6 +52,12 @@ const generateQueryString = (data, id, key) => {
   return queries;
 };
 
+/*
+ * What: fetch data from api
+ * Why: for generating diet plan
+ * @param data: object
+ * @return result: Array<Promise>
+ **/
 const getPlan = (data) => {
   let result = [];
   let promises = [];
@@ -65,12 +80,15 @@ const getPlan = (data) => {
   });
 };
 
+// endpoint for all static files
 app.get("/*", renderHTML);
+// endpoint for getting diet plan
 app.post("/api/getPlan", (req, res) => {
   getPlan(req.body).then(result => {
     res.send(result);
   });
 });
+// endpoint for getting info on diseases
 app.post("/api/getDiseaseInfo", (req, response) => {
   axios.get(`https://wsearch.nlm.nih.gov/ws/query?db=healthTopics&term=title:${req.body.query}`)
     .then(res => {

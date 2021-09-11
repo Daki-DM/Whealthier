@@ -15,6 +15,7 @@ let routes = [
   new Route('/disease-info', DiseaseInfo)
 ]
 
+// handles routing in the app
 class Router {
   /*
    * @param routes Array [ Route ]

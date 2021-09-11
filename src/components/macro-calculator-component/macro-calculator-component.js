@@ -361,6 +361,7 @@ class MacroCalculatorComponent extends HTMLElement {
     this.personDetails = document.createElement('div');
     this.personDetails.classList.add('person-details');
     
+    // input for units (metric or imperial)
     let unitContainer = document.createElement('div');
     
     let unitHeading = document.createElement('p');
@@ -373,6 +374,7 @@ class MacroCalculatorComponent extends HTMLElement {
     unitRadioContainer.classList.add('unit-radio-container');
     
     for(let i = 0; i < 2; i++) {
+      // create radio and label
       let radioDiv = document.createElement('div');
       radioDiv.classList.add('radio');
       
@@ -406,6 +408,7 @@ class MacroCalculatorComponent extends HTMLElement {
     
     this.personDetails.appendChild(unitContainer);
 
+    // input for person/user's gender
     let genderDetails = document.createElement('div');
     genderDetails.classList.add('gender-details');
     
@@ -422,6 +425,7 @@ class MacroCalculatorComponent extends HTMLElement {
     radioContainer.classList.add('radio-container');
     
     for (let i = 0; i < 2; i++) {
+      // create radio and label
       let maleOrFemale = i === 0 ? 0 : 1;
 
       let radioDiv = document.createElement('div');
@@ -458,6 +462,7 @@ class MacroCalculatorComponent extends HTMLElement {
 
     this.personDetails.appendChild(genderDetails);
 
+    // inputs for age, height, weight, neck, waist and hip
     inputsRequired.forEach((obj, i) => {
       let container = document.createElement('div');
       container.classList.add('input-container');
@@ -483,6 +488,7 @@ class MacroCalculatorComponent extends HTMLElement {
       this.personDetails.appendChild(container);
     });
     
+    // input for person/user's workout goal
     let workoutGoalDetails = document.createElement('div');
     workoutGoalDetails.classList.add('workout-goal');
     
@@ -527,6 +533,7 @@ class MacroCalculatorComponent extends HTMLElement {
     
     this.personDetails.appendChild(workoutGoalDetails);
     
+    // input for person/user's activity level
     let activityLevelDetails = document.createElement('div');
     activityLevelDetails.classList.add('activity-level');
     
@@ -575,6 +582,7 @@ class MacroCalculatorComponent extends HTMLElement {
     button.setAttribute('type', 'submit');
     button.innerText = 'Find!';
     
+    // handle submit event
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       this.calculate();
@@ -593,6 +601,7 @@ class MacroCalculatorComponent extends HTMLElement {
     shadow.appendChild(style);
     shadow.appendChild(content);
   }
+  // function to handle unit change
   changeUnits(ev) {
     if(ev.target.getAttribute('value') === 'metric') this.unit = 0;
     else if(ev.target.getAttribute('value') === 'imperial') this.unit = 1;
@@ -607,6 +616,7 @@ class MacroCalculatorComponent extends HTMLElement {
       this.gender = 'female';
     }
   }
+  // calculates results based on given inputs
   calculate() {
     let age = inputsRequired[0].elem.value;
     let height = inputsRequired[1].elem.value;
@@ -668,6 +678,7 @@ class MacroCalculatorComponent extends HTMLElement {
       fat
     );
   }
+  // render the output on to the screen
   renderOutput(
     bmi,
     bfp,

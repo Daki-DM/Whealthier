@@ -334,6 +334,7 @@ class DietPlannerComponent extends HTMLElement {
     // form
     let form = document.createElement('form');
     
+    // no of meals a user/person eats a day
     let noOfMealsContainer = document.createElement('div');
     noOfMealsContainer.classList.add('input-label-container');
     let noOfMealsSpinner = document.createElement('select');
@@ -349,6 +350,7 @@ class DietPlannerComponent extends HTMLElement {
       option.innerText = plan.name;
       noOfMealsSpinner.appendChild(option);
     });
+    // set mealCount when value changes
     noOfMealsSpinner.addEventListener('change', (ev) => {
       ev.preventDefault();
       this.mealCount = noOfMealsSpinner.options[noOfMealsSpinner.selectedIndex].value;
@@ -358,7 +360,7 @@ class DietPlannerComponent extends HTMLElement {
     noOfMealsLabel.setAttribute('for', 'no-meal-select');
     noOfMealsContainer.append(noOfMealsLabel, noOfMealsSpinner);
     
-
+    // input for how many calories a person eats a day
     let calorieInputContainer = document.createElement('div');
     calorieInputContainer.classList.add('input-label-container');
     let calorieInput = document.createElement('input');
@@ -377,7 +379,7 @@ class DietPlannerComponent extends HTMLElement {
     calorieLabel.setAttribute('for', 'calorie-input');
     calorieInputContainer.append(calorieLabel, calorieInput);
     
-    
+    // options for user's health preferences
     let healthLabelContainer = document.createElement('div');
     healthLabelContainer.classList.add('input-label-container');
     let healthLabelCheckBoxContainer = document.createElement('div');
@@ -412,6 +414,7 @@ class DietPlannerComponent extends HTMLElement {
     healthLabelLabel.innerHTML = 'Health Label';
     healthLabelContainer.append(healthLabelLabel, healthLabelCheckBoxContainer);
     
+    // options for user's diet preferences
     let dietLabelContainer = document.createElement('div');
     dietLabelContainer.classList.add('input-label-container');
     let dietLabelRadioContainer = document.createElement('div');
@@ -445,6 +448,7 @@ class DietPlannerComponent extends HTMLElement {
     button.setAttribute('type', 'submit');
     button.innerText = 'Get Plan';
 
+    // append all inputs to a form
     form.append(
       noOfMealsContainer,
       calorieInputContainer,
@@ -453,6 +457,7 @@ class DietPlannerComponent extends HTMLElement {
       button
     );
     
+    // render loader before showing output, also calls function to show it
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
       this.output.innerHTML = '';
@@ -470,6 +475,7 @@ class DietPlannerComponent extends HTMLElement {
     shadow.appendChild(content);
   }
   calculate() {
+    // fetch data from backend
     getDietPlan(
       {
         calories: this.calories,
@@ -490,6 +496,7 @@ class DietPlannerComponent extends HTMLElement {
   }
   renderOutput(recipes) {
     this.output.innerHTML = '';
+    // go through all recipes and render a diet card
     recipes.forEach(recipe => {
       let label = recipe.label;
       let calories = recipe.calories;

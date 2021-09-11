@@ -201,6 +201,7 @@ input[type=number] {
   grid-template-columns: repeat(3, 1fr);
   box-sizing: border-box;
   gap: 20px;
+  margin-bottom: 10px;
 }
 
 .diet-card {
@@ -280,6 +281,12 @@ button {
   cursor: pointer;
 }
 
+loader-component {
+  grid-column: 1/-1;
+  justify-self: center;
+  padding: 20px;
+}
+
 @media (max-width: 768px) {
   .diet-planner {
     padding-top: 5rem;
@@ -295,6 +302,9 @@ button {
   }
   .output {
     grid-template-columns: 1fr;
+  }
+  loader-component {
+    padding: 10px;
   }
 }
 `;
@@ -445,9 +455,9 @@ class DietPlannerComponent extends HTMLElement {
     
     form.addEventListener('submit', (ev) => {
       ev.preventDefault();
+      this.output.innerHTML = '';
+      this.output.appendChild(document.createElement('loader-component'));
       this.calculate();
-      this.output.style.padding = '20px';
-      this.output.style.marginBottom = '20px';
       window.scrollTo({top: 0, behavior: 'smooth'});
     });
     
@@ -515,11 +525,16 @@ class DietPlannerComponent extends HTMLElement {
       ingredientListLabel.classList.add('list-label');
       ingredientListLabel.innerText = 'Ingredients';
       let ingredientList = document.createElement('ul');
-      ingredients.forEach(v => {
+      ingredients?.forEach(v => {
         let li = document.createElement('li');
         li.innerText = v.toString();
         ingredientList.appendChild(li);
       });
+      if(!ingredients) {
+        let li = document.createElement('li');
+        li.innerText = 'Unknown';
+        ingredientList.appendChild(li);
+      }
       
       dietCard.append(
         recipeImage,
@@ -533,6 +548,8 @@ class DietPlannerComponent extends HTMLElement {
       );
 
       this.output.appendChild(dietCard);
+      this.output.style.padding = '20px';
+      this.output.style.marginBottom = '20px';
     });
   }
 }

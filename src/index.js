@@ -3,6 +3,7 @@ import {
 } from './miscellaneous/router.js'
 import { NavBar } from './components/nav-bar/nav-bar.js';
 import { SectionBreaker } from './components/section-breaker/section-breaker.js';
+import { Loader } from './components/loader/loader.js';
 
 let nav = document.getElementById('nav');
 let menu = document.getElementById('menu');

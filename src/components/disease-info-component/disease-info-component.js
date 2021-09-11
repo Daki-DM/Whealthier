@@ -161,7 +161,6 @@ class DiseaseInfoComponent extends HTMLElement {
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'Disease Name');
     input.setAttribute('required', true);
-    input.setAttribute('value', 'asthma');
 
     let button = document.createElement('button');
     button.innerHTML = 'Search';
@@ -195,7 +194,7 @@ class DiseaseInfoComponent extends HTMLElement {
   }
   getDiseaseInfo(queryStr) {
     fetch(
-      'http://localhost:3000/api/getDiseaseInfo',
+      '/api/getDiseaseInfo',
       {
         method: 'POST',
         body: JSON.stringify({ query: queryStr }),

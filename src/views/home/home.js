@@ -31,15 +31,15 @@ let homeViewStyle = `
 }
 
 .feature-section {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
 }
 
 .feature-section .feature-card {
   width: 100%;
   background-color: #F2F2F2;
   border-radius: 10px;
-  margin-bottom: 10px;
   padding: 30px;
   box-sizing: border-box;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -84,6 +84,15 @@ let homeViewStyle = `
   .landing-section .hero-img {
     max-width: 100%;
   }
+  .feature-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 920px) {
+  .feature-section {
+    grid-template-columns: 1fr;
+  }
 }
 `;
 
@@ -109,30 +118,42 @@ class HomeView extends BaseView {
       
       <div class="feature-section" id="features">
         <div class="feature-card">
+          <h2>Diet Planner</h2>
+          <p>
+            Eating healthy food is one of the best ways you can maintain your
+            health. At Whealthier, we provide a diet planner which generates a
+            personalized diet plan according to your health and food preferences.
+          </p>
+          <a href="/diet-planner" spa-page-link="true">Go there</a>
+        </div> 
+        <div class="feature-card">
           <h2>Meditation Corner</h2>
           <p>
-            Meditation is a consciousness-changing technique that has been
-            shown to have a wide number of benefits on psychological well-being
+            Along with physical health maintaining mental health is necessary
+            for a healthy life. Immerse your mind into complete relaxation with
+            assisted breathing and ambient background music at the meditation
+            corner at Whealthier.
           </p>
           <a href="/meditation-corner" spa-page-link="true">Go there</a>
         </div>
         <div class="feature-card">
           <h2>Macro Calculator</h2>
           <p>
-            Macro Calculator can say how much calories you need to eat a day. It
-            also gives a breakdown on how much fats, proteins and carbs you need
-            to eat.
+            Knowing your macros is very important if you follow a regular
+            health routine. And we also provide a macro calculator for that.
+            Along with the body macros it also shows other information like
+            Body Fat Percentage, Daily Calorie Intake, etc...
           </p>
           <a href="/macro-calculator" spa-page-link="true">Go there</a>
         </div>
         <div class="feature-card">
-          <h2>Diet Planner</h2>
+          <h2>Disease Info</h2>
           <p>
-            Diet Planner can provide a personalised diet plan according to your
-            preferences. Just provide how many meals you eat a day and your
-            health preferences. And you will get your custom diet plan.
+            Getting a breif information about a less vulnerable disease is
+            better than consulting your doctor. At Whealthier, we provide a
+            feature which can give you a detailed summary of a disease.
           </p>
-          <a href="/diet-planner" spa-page-link="true">Go there</a>
+          <a href="/disease-info" spa-page-link="true">Go there</a>
         </div>
       </div>
 

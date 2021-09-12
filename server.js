@@ -13,8 +13,8 @@ const mealTypes = {
   'five': ['Breakfast Snack', 'Breakfast', 'Lunch', 'Afternoon Snack', 'Dinner']
 };
 
-const appKey = '86577f7b936561855eac4d586e23ec55';
-const appId = '3304cf1a';
+const appKey = '3d52e4c7c6250b71a5430ed7671efc38';
+const appId = '6e36b208';
 
 app.use(cors());
 app.use(express.json());
@@ -46,7 +46,7 @@ const generateQueryString = (data, id, key) => {
   let queries = [];
   for (let i = 0; i < noOfMeals; i++) {
     let queryParam = mealTypes[data.mealCount][i];
-    let query = `q=${queryParam}&app_id=${id}&app_key=${key}&diet=${data.diet}${healthLabels}&calories=${Math.round(calories)}&random=true`;
+    let query = `q=${queryParam}&app_id=${id}&app_key=${key}&diet=${data.diet}${healthLabels}&calories=${Math.round(calories)-200}-${Math.round(calories)}&random=true`;
 		queries.push(query);
   }
   return queries;

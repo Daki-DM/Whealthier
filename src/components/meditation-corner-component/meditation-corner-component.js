@@ -138,6 +138,16 @@ p {
   }
 }
 
+.circle .hover {
+  opacity: 1;
+  display: block;
+  transition: opacity 0.5s ease;
+}
+
+.circle.breathing .hover {
+  opacity: 0;
+}
+
 .popup-button {
   position: fixed;
   bottom: 1rem;
@@ -226,6 +236,9 @@ class MeditationCornerComponent extends HTMLElement {
     inhaleExhaleCircle.addEventListener('mouseover', this.startOrResumeAudio);
     inhaleExhaleCircle.addEventListener('mouseout', this.pauseAudio);
     
+    let hoverText = document.createElement('p');
+    hoverText.innerHTML = 'Hover';
+    hoverText.classList.add('hover');
     let inhaleText = document.createElement('p');
     inhaleText.innerHTML = 'Inhale';
     inhaleText.classList.add('inhale');
@@ -233,7 +246,7 @@ class MeditationCornerComponent extends HTMLElement {
     exhaleText.innerHTML = 'Exhale';
     exhaleText.classList.add('exhale');
     
-    inhaleExhaleCircle.append(inhaleText, exhaleText);
+    inhaleExhaleCircle.append(hoverText, inhaleText, exhaleText);
     
     audioSource.forEach(v => {
       let source = new Audio(v.link);

@@ -5,6 +5,7 @@ let homeViewStyle = `
   padding-top: 3rem;
   margin-left: 4rem;
   margin-right: 4rem;
+  padding-bottom: 4rem;
 }
 
 .landing-section {
@@ -75,6 +76,7 @@ let homeViewStyle = `
     padding-top: 5rem;
     margin-left: 10px;
     margin-right: 10px;
+    padding-bottom: 2rem;
   }
   .landing-section {
     flex-direction: column;
